@@ -1,13 +1,13 @@
 HELP.md
 
 .mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
 **/src/test/**
 /.classpath
 /.mvn/
 /.project
 /.settings/
 /target/
+/mvnw
 
 ### STS ###
 .apt_generated
@@ -40,6 +40,8 @@ build/
 
 # Log file
 *.log
+*.cmd
+
 
 # BlueJ files
 *.ctxt
@@ -56,5 +58,7 @@ build/
 *.tar.gz
 *.rar
 
-mvnw.cmd
-mvnw
+
+/.mvn/
+
+/src/test/
