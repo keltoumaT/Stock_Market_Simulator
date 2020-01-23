@@ -3,7 +3,7 @@ HELP.md
 .mvn/wrapper/maven-wrapper.jar
 **/src/test/**
 /.classpath
-/.mvn/
+/api/.mvn/
 /.project
 /.settings/
 /target/
@@ -59,6 +59,6 @@ build/
 *.rar
 
 
-/.mvn/
+/api/.mvn/
 
 /src/test/
