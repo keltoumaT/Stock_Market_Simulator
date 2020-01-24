@@ -62,3 +62,4 @@ build/
 /api/.mvn/
 
 /src/test/
+/.mvn/

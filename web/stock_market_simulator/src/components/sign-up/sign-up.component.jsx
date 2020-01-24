@@ -26,7 +26,7 @@ class SignUp extends React.Component {
       password: password
     });
     console.log(this.state);
-    const URL = 'http://localhost:8081/member';
+    const URL = 'http://localhost:8585/member';
     axios
       .post(URL, {
         lastName: this.state.lastName,
