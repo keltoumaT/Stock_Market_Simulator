@@ -79,6 +79,7 @@ class SignUp extends React.Component {
             value={email}
             onChange={this.handleChange}
             label="Email"
+            maxLength="200"
             required
           />
           <FormInput

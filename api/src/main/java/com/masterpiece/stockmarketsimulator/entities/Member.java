@@ -12,7 +12,7 @@ public class Member extends AbstractEntity{
     @Column(length = 50, nullable = false)
     private String firstName;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String email;
 
     @Column(length = 50, nullable = false)
