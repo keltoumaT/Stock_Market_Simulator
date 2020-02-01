@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/members")
 public class MemberController {
 
     private final MemberService memberService;
