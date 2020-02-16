@@ -1,19 +1,19 @@
 package com.masterpiece.stockmarketsimulator.services;
 
 import com.masterpiece.stockmarketsimulator.dtos.MemberDto;
-import com.masterpiece.stockmarketsimulator.dtos.MemberViewDto;
 import com.masterpiece.stockmarketsimulator.entities.Member;
 import com.masterpiece.stockmarketsimulator.repositories.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepo;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     public MemberServiceImpl(MemberRepository memberRepo) {
         this.memberRepo = memberRepo;
