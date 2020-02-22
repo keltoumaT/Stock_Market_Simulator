@@ -60,3 +60,4 @@ build/
 
 /src/test/
 /.mvn/
+/.idea/
