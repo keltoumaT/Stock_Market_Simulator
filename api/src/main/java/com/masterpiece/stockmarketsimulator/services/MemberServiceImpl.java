@@ -2,21 +2,28 @@ package com.masterpiece.stockmarketsimulator.services;
 
 import com.masterpiece.stockmarketsimulator.dtos.MemberDto;
 import com.masterpiece.stockmarketsimulator.entities.Member;
+import com.masterpiece.stockmarketsimulator.entities.Role;
 import com.masterpiece.stockmarketsimulator.repositories.MemberRepository;
+import com.masterpiece.stockmarketsimulator.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepo;
+    private final RoleRepository roleRepository;
 
     @Autowired
     RestTemplate restTemplate;
 
-    public MemberServiceImpl(MemberRepository memberRepo) {
+    public MemberServiceImpl(MemberRepository memberRepo, RoleRepository roleRepository) {
         this.memberRepo = memberRepo;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -32,6 +39,12 @@ public class MemberServiceImpl implements MemberService {
         member.setFirstName(dto.getFirstName());
         member.setEmail(dto.getEmail());
         member.setPassword(dto.getPassword());
+        member.setEnabled(true);
+        Role role = roleRepository.findByDefaultRoleTrue();
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        member.setRoles(roles);
         memberRepo.save(member);
+
     }
 }

@@ -13,10 +13,6 @@ class SearchBox extends React.Component {
   }
 
   componentDidMount() {
-    // fetch('https://api.iextrading.com/1.0/ref-data/symbols')
-    //   .then(response => response.json())
-    //   .then(companies => this.setState({ companies: companies }));
-
     Axios.get('https://api.iextrading.com/1.0/ref-data/symbols').then(res => {
       console.log(res.data);
       this.setState({
