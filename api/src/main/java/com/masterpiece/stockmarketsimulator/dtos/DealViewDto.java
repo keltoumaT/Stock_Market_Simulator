@@ -2,7 +2,7 @@ package com.masterpiece.stockmarketsimulator.dtos;
 
 import java.time.LocalDate;
 
-public interface ShareViewDto {
+public interface DealViewDto {
 
     String getCompanyName();
     Long getQuantity();

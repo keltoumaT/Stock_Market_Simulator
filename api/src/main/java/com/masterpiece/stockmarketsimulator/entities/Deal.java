@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 
 @Entity
-public class Share extends AbstractEntity{
+public class Deal extends AbstractEntity{
 
     @Column(length = 255)
     private String companyName;

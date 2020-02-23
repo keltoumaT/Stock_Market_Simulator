@@ -3,7 +3,7 @@ package com.masterpiece.stockmarketsimulator.dtos;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
-public class ShareDto {
+public class DealDto {
 
     @NotEmpty
     private String companyName;

@@ -19,7 +19,7 @@ public class Wallet extends AbstractEntity{
     private Member member;
 
     @OneToMany
-    private Set<Share> shares;
+    private Set<Deal> deals;
 
     public String getName() {
         return name;

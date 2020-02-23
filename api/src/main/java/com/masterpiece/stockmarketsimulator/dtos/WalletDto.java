@@ -1,7 +1,7 @@
 package com.masterpiece.stockmarketsimulator.dtos;
 
 import com.masterpiece.stockmarketsimulator.entities.Member;
-import com.masterpiece.stockmarketsimulator.entities.Share;
+import com.masterpiece.stockmarketsimulator.entities.Deal;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class WalletDto {
     @NotNull
     private Member member;
 
-    private Set<Share> shares;
+    private Set<Deal> deals;
 
     public String getName() {
         return name;
@@ -57,11 +57,11 @@ public class WalletDto {
         this.member = member;
     }
 
-    public Set<Share> getShares() {
-        return shares;
+    public Set<Deal> getDeals() {
+        return deals;
     }
 
-    public void setShares(Set<Share> shares) {
-        this.shares = shares;
+    public void setDeals(Set<Deal> deals) {
+        this.deals = deals;
     }
 }

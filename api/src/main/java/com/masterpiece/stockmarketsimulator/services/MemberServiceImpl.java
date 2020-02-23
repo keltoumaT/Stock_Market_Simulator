@@ -18,8 +18,6 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepo;
     private final RoleRepository roleRepository;
 
-    @Autowired
-    RestTemplate restTemplate;
 
     public MemberServiceImpl(MemberRepository memberRepo, RoleRepository roleRepository) {
         this.memberRepo = memberRepo;
