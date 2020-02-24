@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-
+    MemberViewDto getById(Long id);
 }

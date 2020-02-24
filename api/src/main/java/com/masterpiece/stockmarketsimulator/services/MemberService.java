@@ -8,6 +8,7 @@ import java.util.List;
 public interface MemberService {
 
     void create(MemberDto dto);
+    MemberViewDto getOne(Long id);
 
 
 }

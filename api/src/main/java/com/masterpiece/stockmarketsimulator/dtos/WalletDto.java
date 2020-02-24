@@ -21,7 +21,7 @@ public class WalletDto {
     private Long initialCapital;
 
     @NotNull
-    private Member member;
+    private Long memberId;
 
     private Set<Deal> deals;
 
@@ -49,12 +49,12 @@ public class WalletDto {
         this.initialCapital = initialCapital;
     }
 
-    public Member getMember() {
-        return member;
+    public Long getMemberId() {
+        return memberId;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     public Set<Deal> getDeals() {

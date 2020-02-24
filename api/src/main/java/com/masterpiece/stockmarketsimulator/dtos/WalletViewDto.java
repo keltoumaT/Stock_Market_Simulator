@@ -7,6 +7,5 @@ public interface WalletViewDto {
     String getName();
     String getMemo();
     Long getInitialCapital();
-    Member getMember();
 
 }

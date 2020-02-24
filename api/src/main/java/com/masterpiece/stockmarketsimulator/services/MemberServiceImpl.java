@@ -1,13 +1,12 @@
 package com.masterpiece.stockmarketsimulator.services;
 
 import com.masterpiece.stockmarketsimulator.dtos.MemberDto;
+import com.masterpiece.stockmarketsimulator.dtos.MemberViewDto;
 import com.masterpiece.stockmarketsimulator.entities.Member;
 import com.masterpiece.stockmarketsimulator.entities.Role;
 import com.masterpiece.stockmarketsimulator.repositories.MemberRepository;
 import com.masterpiece.stockmarketsimulator.repositories.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +29,10 @@ public class MemberServiceImpl implements MemberService {
     populateAndSave(dto, member);
     }
 
+    @Override
+    public MemberViewDto getOne(Long id) {
+        return memberRepo.getById(id);
+    }
 
 
     private void populateAndSave(MemberDto dto, Member member){
