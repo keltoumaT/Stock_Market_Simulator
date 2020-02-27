@@ -3,6 +3,8 @@ package com.masterpiece.stockmarketsimulator.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 
@@ -17,6 +19,18 @@ public class Deal extends AbstractEntity{
     private Long unityPrice;
 
     private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Wallet wallet;
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
 
     public LocalDate getDate() {
         return date;

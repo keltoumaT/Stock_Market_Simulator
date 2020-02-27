@@ -1,6 +1,9 @@
 package com.masterpiece.stockmarketsimulator.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class DealDto {
@@ -8,15 +11,25 @@ public class DealDto {
     @NotEmpty
     private String companyName;
 
-    @NotEmpty
+    @NotNull
     private Long quantity;
 
-    @NotEmpty
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
 
-
-    @NotEmpty
+    @NotNull
     private Long unityPrice;
+
+    @NotNull
+    private Long walletId;
+
+    public Long getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(Long walletId) {
+        this.walletId = walletId;
+    }
 
     public Long getUnityPrice() {
         return unityPrice;

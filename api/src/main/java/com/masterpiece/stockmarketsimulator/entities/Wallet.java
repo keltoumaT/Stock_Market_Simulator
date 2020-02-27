@@ -1,7 +1,6 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Wallet extends AbstractEntity{
@@ -18,8 +17,6 @@ public class Wallet extends AbstractEntity{
     @JoinColumn(nullable = false)
     private Member member;
 
-    @OneToMany
-    private Set<Deal> deals;
 
     public String getName() {
         return name;
@@ -52,4 +49,5 @@ public class Wallet extends AbstractEntity{
     public void setMember(Member member) {
         this.member = member;
     }
+
 }

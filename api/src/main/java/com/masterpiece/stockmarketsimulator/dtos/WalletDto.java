@@ -1,6 +1,5 @@
 package com.masterpiece.stockmarketsimulator.dtos;
 
-import com.masterpiece.stockmarketsimulator.entities.Member;
 import com.masterpiece.stockmarketsimulator.entities.Deal;
 
 import javax.validation.constraints.NotEmpty;
@@ -17,13 +16,12 @@ public class WalletDto {
     @Size(max = 255)
     private String memo;
 
-    @NotEmpty
+    @NotNull
     private Long initialCapital;
 
     @NotNull
     private Long memberId;
 
-    private Set<Deal> deals;
 
     public String getName() {
         return name;
@@ -57,11 +55,5 @@ public class WalletDto {
         this.memberId = memberId;
     }
 
-    public Set<Deal> getDeals() {
-        return deals;
-    }
 
-    public void setDeals(Set<Deal> deals) {
-        this.deals = deals;
-    }
 }
