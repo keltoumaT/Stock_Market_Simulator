@@ -3,9 +3,6 @@ import { Component } from 'react';
 import './search-box.styles.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
-import { Switch, Route } from 'react-router-dom';
-import CompanyDetails from '../../pages/company-details/company-details.component';
 class SearchBox extends Component {
   constructor(props) {
     super(props);

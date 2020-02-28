@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-
+import CompanyTable from '../../components/company-table/company-table.component';
 class CompanyDetails extends Component {
   constructor({
     match: {
@@ -14,12 +13,7 @@ class CompanyDetails extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <h1>Company Details</h1>
-        <h2>{this.state.symbol}</h2>
-      </div>
-    );
+    return <CompanyTable symbol={this.state.symbol} />;
   }
 }
 
