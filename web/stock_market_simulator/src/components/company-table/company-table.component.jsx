@@ -14,8 +14,9 @@ class CompanyTable extends Component {
     this.getCompanyData();
   }
   getCompanyData = () => {
+      let URL = `http://localhost:8585/companies/${this.state.symbol}`;
     axios
-      .get(`http://localhost:8585/companies/${this.state.symbol}`)
+      .get(URL)
       .then(response => {
         console.log(response.data);
         this.setState({

@@ -17,8 +17,9 @@ class SearchBox extends Component {
   }
 
   getCompanies = () => {
+    let URL = 'https://api.iextrading.com/1.0/ref-data/symbols';
     axios
-      .get('https://api.iextrading.com/1.0/ref-data/symbols')
+      .get(URL)
       .then(response => {
         this.setState({
           companies: response.data,
