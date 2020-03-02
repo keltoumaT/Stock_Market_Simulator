@@ -14,7 +14,7 @@ class CompanyTable extends Component {
     this.getCompanyData();
   }
   getCompanyData = () => {
-      let URL = `http://localhost:8585/companies/${this.state.symbol}`;
+    let URL = `http://localhost:8585/companies/${this.state.symbol}`;
     axios
       .get(URL)
       .then(response => {
@@ -50,7 +50,7 @@ class CompanyTable extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr className="content">
                 {/* Loop here for td  */}
                 {Object.entries(
                   this.state.companyData
@@ -66,7 +66,9 @@ class CompanyTable extends Component {
             </tbody>
           </table>
         </div>
+
       </div>
+      // Put DEALFORM component here and pass it props i.e => data
     );
   }
 }

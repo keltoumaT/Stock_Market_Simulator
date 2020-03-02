@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CompanyTable from '../../components/company-table/company-table.component';
+import DealForm from '../../components/deal-form/deal-form.component';
 class CompanyDetails extends Component {
   constructor({
     match: {
@@ -13,7 +14,12 @@ class CompanyDetails extends Component {
   }
 
   render() {
-    return <CompanyTable symbol={this.state.symbol} />;
+    return(
+    <div>
+    <CompanyTable symbol={this.state.symbol} />
+    <DealForm symbol={this.state.symbol}/>
+    </div>
+    )
   }
 }
 
