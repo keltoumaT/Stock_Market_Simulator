@@ -11,6 +11,7 @@ import com.masterpiece.stockmarketsimulator.repositories.WalletRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -36,6 +37,11 @@ public class WalletServiceImpl implements WalletService {
         return walletRepository.getById(id);
     }
 
+    @Override
+    public List<WalletViewDto> getAll() {
+        return walletRepository.getAllProjectedBy();
+    }
+
     private void populateAndSave(WalletDto dto, Wallet wallet){
         wallet.setInitialCapital(dto.getInitialCapital());
         wallet.setMemo(dto.getMemo());
@@ -44,4 +50,6 @@ public class WalletServiceImpl implements WalletService {
         wallet.setMember(member);
         walletRepository.save(wallet);
     }
+
+
 }

@@ -2,10 +2,12 @@ package com.masterpiece.stockmarketsimulator.controllers;
 
 
 import com.masterpiece.stockmarketsimulator.dtos.WalletDto;
+import com.masterpiece.stockmarketsimulator.dtos.WalletViewDto;
 import com.masterpiece.stockmarketsimulator.services.WalletService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -21,5 +23,15 @@ public class WalletController {
     @PostMapping
     protected void create(@Valid @RequestBody WalletDto dto){
         walletService.create(dto);
+    }
+
+    @GetMapping("/{id}")
+    protected WalletViewDto getWallet (@PathVariable("id") Long id){
+        return walletService.getOne(id);
+    }
+
+    @GetMapping
+    protected List<WalletViewDto> getAll(){
+      return  walletService.getAll();
     }
 }
