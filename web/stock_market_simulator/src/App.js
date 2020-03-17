@@ -9,6 +9,7 @@ import Companies from './pages/companies/companies.component';
 import Header from './components/header/header.component';
 import './App.css';
 import CompanyDetails from './pages/company-details/company-details.component';
+import WalletPage from './pages/wallet/wallet.component';
 
 
 class App extends React.Component {
@@ -40,6 +41,9 @@ class App extends React.Component {
         CompanyDetails
       }
       /> 
+      <Route path = "/wallets"
+      component={WalletPage}
+      />
       </Switch> 
       </div>
     )
