@@ -30,8 +30,8 @@ public class WalletController {
         return walletService.getOne(id);
     }
 
-    @GetMapping
-    protected List<WalletViewDto> getAll(){
-      return  walletService.getAll();
+    @GetMapping("all/{id}")
+    protected List<WalletViewDto> getAll(@PathVariable("id")Long id){
+      return  walletService.getAll(id);
     }
 }

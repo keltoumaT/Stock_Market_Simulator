@@ -10,6 +10,7 @@ import Header from './components/header/header.component';
 import './App.css';
 import CompanyDetails from './pages/company-details/company-details.component';
 import WalletPage from './pages/wallet/wallet.component';
+import TradingBoard from './pages/trading-board/trading-board.component';
 
 
 class App extends React.Component {
@@ -44,6 +45,8 @@ class App extends React.Component {
       <Route path = "/wallets"
       component={WalletPage}
       />
+
+      <Route path ="/trading-board/:walletId" component={TradingBoard}/>
       </Switch> 
       </div>
     )

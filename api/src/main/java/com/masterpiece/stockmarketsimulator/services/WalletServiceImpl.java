@@ -38,8 +38,8 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public List<WalletViewDto> getAll() {
-        return walletRepository.getAllProjectedBy();
+    public List<WalletViewDto> getAll(Long id) {
+        return walletRepository.getAllByMemberId(id);
     }
 
     private void populateAndSave(WalletDto dto, Wallet wallet){

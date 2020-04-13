@@ -12,5 +12,5 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
 
     WalletViewDto getById(Long id);
 
-    List<WalletViewDto> getAllProjectedBy();
+    List<WalletViewDto> getAllByMemberId(Long id);
 }

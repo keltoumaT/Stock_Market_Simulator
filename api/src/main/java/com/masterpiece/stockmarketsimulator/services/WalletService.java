@@ -11,5 +11,5 @@ public interface WalletService {
 
     WalletViewDto getOne(Long id);
 
-    List<WalletViewDto> getAll();
+    List<WalletViewDto> getAll(Long id);
 }
