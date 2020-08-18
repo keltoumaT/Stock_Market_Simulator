@@ -12,4 +12,7 @@ public interface WalletService {
     WalletViewDto getOne(Long id);
 
     List<WalletViewDto> getAll(Long id);
+
+    void update (Long id, WalletDto dto);
+
 }

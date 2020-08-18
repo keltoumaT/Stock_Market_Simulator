@@ -1,0 +1,51 @@
+#sell_buy{
+    width: 20%;
+    color:red;
+}
+
+#x{
+    border-radius: 25px;
+    border-collapse: separate;
+    border:none;
+
+}
+
+#trading_board_body{
+  padding: 20px 40px;
+}
+
+tbody{
+    border-radius: 25px;
+    
+}
+
+td{
+    //border-radius: 25px;
+}
+
+#d{
+    display: flex;
+    justify-content: space-between;
+}
+
+#trading_board_body{
+    //background-color: #F3F6FE;
+    background-color: #F2F3FC;
+    padding-bottom: 20%;
+}
+
+.button{
+    background-color: #9CAEF8; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button2 {
+    border-radius: 4px;
+}

@@ -1,5 +1,7 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import java.util.Set;
 

@@ -1,12 +1,14 @@
 package com.masterpiece.stockmarketsimulator.dtos;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public interface DealViewDto {
 
     String getCompanyName();
     Long getQuantity();
-    Long getUnityPrice();
-    LocalDate getDate();
+    Double getUnityPrice();
+    LocalDateTime getDate();
+    String getSymbol();
+    Long getId();
 
 }

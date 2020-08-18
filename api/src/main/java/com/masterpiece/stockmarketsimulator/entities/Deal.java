@@ -1,24 +1,26 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.time.LocalDate;
+import org.hibernate.annotations.Proxy;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
-public class Deal extends AbstractEntity{
+public class Deal extends AbstractEntity {
 
     @Column(length = 255)
     private String companyName;
 
     private Long quantity;
 
-    private Long unityPrice;
+    private Double unityPrice;
 
-    private LocalDate date;
+    private LocalDateTime date;
+
+    @Column(length = 10)
+    private String symbol;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -32,11 +34,11 @@ public class Deal extends AbstractEntity{
         this.wallet = wallet;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -56,11 +58,19 @@ public class Deal extends AbstractEntity{
         this.quantity = quantity;
     }
 
-    public Long getUnityPrice() {
+    public Double getUnityPrice() {
         return unityPrice;
     }
 
-    public void setUnityPrice(Long unityPrice) {
+    public void setUnityPrice(Double unityPrice) {
         this.unityPrice = unityPrice;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

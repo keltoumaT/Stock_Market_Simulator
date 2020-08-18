@@ -34,4 +34,12 @@ public class WalletController {
     protected List<WalletViewDto> getAll(@PathVariable("id")Long id){
       return  walletService.getAll(id);
     }
+
+    @PutMapping("/{id}")
+    protected void update(@PathVariable("id") Long id,
+                          @Valid @RequestBody WalletDto dto) {
+        walletService.update(id, dto);
+    }
+
+
 }

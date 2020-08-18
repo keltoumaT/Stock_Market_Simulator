@@ -2,6 +2,7 @@ package com.masterpiece.stockmarketsimulator.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Proxy;
 
 import java.time.LocalDate;
 

@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 
 public class DealDto {
 
@@ -14,14 +15,18 @@ public class DealDto {
     @NotNull
     private Long quantity;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private LocalDate date;
+    //@JsonFormat(pattern="yyyy-MM-dd-HH-mm-ss")
+    //private LocalDateTime date;
 
     @NotNull
-    private Long unityPrice;
+    @Positive
+    private Double unityPrice;
 
     @NotNull
     private Long walletId;
+
+    @NotNull
+    private String symbol;
 
     public Long getWalletId() {
         return walletId;
@@ -31,11 +36,11 @@ public class DealDto {
         this.walletId = walletId;
     }
 
-    public Long getUnityPrice() {
+    public Double getUnityPrice() {
         return unityPrice;
     }
 
-    public void setUnityPrice(Long unityPrice) {
+    public void setUnityPrice(Double unityPrice) {
         this.unityPrice = unityPrice;
     }
 
@@ -55,11 +60,19 @@ public class DealDto {
         this.quantity = quantity;
     }
 
-    public LocalDate getDate() {
-        return date;
+   // public LocalDateTime getDate() {
+    //    return date;
+  //  }
+
+   // public void setDate(LocalDateTime date) {
+   //     this.date = date;
+   // }
+
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

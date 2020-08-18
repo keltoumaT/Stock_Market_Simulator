@@ -1,9 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
-import './search-box.styles.scss';
+import './search-bar.styles.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-class SearchBox extends Component {
+class SearchBar extends Component {
   constructor(props) {
     super(props);
 
@@ -34,6 +33,7 @@ class SearchBox extends Component {
   };
 
   onChange = event => {
+    document.getElementById("companyList").style.display="block";
     console.log(event.target.value);
     let searchQuery = event.target.value.toLowerCase();
     let displayedCompanies = this.state.companies.filter(company => {
@@ -50,26 +50,31 @@ class SearchBox extends Component {
     });
     console.log(this.state.remainingCompanies);
   };
+
+  clearInputField(){
+      document.getElementById("searchBar").value = "";
+      document.getElementById("companyList").style.display="none";
+  }
+
   render() {
     return (
       <div className="holder">
         <input
           type="text"
-          name="searchBox"
-          id=""
+          name="SearchBar"
+          id="searchBar"
           placeholder="Company Name"
           onChange={this.onChange}
           className="search_input"
         />
         
-        <ul>
-          {this.state.remainingCompanies.slice(0, 5).map((value, index) => {
+        <ul id="companyList">
+          {this.state.remainingCompanies.slice(0, 3).map((value, index) => {
             return (
-              <Link key={index} to={`company/${value.symbol}`}>
-                <li key={index}>
+                <li onClick={()=>{this.props.data(value.symbol); this.clearInputField()}} key={index}>
                   {value.name} <span>Symbol: {value.symbol}</span>
                 </li>
-              </Link>
+            
             );
           })}
         </ul>
@@ -79,4 +84,4 @@ class SearchBox extends Component {
   }
 }
 
-export default SearchBox;
+export default SearchBar;

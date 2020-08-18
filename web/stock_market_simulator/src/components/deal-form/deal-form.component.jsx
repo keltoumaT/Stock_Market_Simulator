@@ -41,23 +41,30 @@ class DealForm extends Component {
     
   };
   handleClick = event => {
+    //if else
     event.preventDefault();
     console.log(event);
     axios
       .post('http://localhost:8585/deals', {
         companyName: this.state.companyData.companyName,
         quantity: this.state.quantity,
-        date: new Date().toISOString().slice(0, 10),
         unityPrice: this.state.companyData.latestPrice,
+        symbol:this.state.symbol,
         walletId: 1
       })
       .then(response => {
         console.log(response);
+        console.log(response.status)
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+  userHasEnoughLiquidity(){
+    //Make call to get wallet info
+    //Compare liquidity from wallet with quantity times unityPrice return true or false
+  }
   render() {
     return (
       <div>

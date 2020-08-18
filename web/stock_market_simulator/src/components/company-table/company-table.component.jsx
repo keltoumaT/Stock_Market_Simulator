@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './company-table.styles.scss';
 class CompanyTable extends Component {
-  constructor({ symbol }) {
+  constructor({ symbol, getCompanyObj }) {
     super();
     this.state = {
       companyData: {},
@@ -12,21 +12,27 @@ class CompanyTable extends Component {
 
   componentDidMount() {
     this.getCompanyData();
+    console.log(this.props);
+   this.props.getCompanyObj(this.state.companyData);
   }
   getCompanyData = () => {
-    let URL = `http://localhost:8585/companies/${this.state.symbol}`;
-    axios
-      .get(URL)
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-          companyData: response.data,
-          symbol: this.state.symbol
+    if(this.state.symbol !== undefined){
+      let URL = `http://localhost:8585/companies/${this.state.symbol}`;
+      axios
+        .get(URL)
+        .then(response => {
+          console.log(response.data);
+          this.setState({
+            companyData: response.data,
+            symbol: this.state.symbol
+          });
+          
+        })
+        .catch(error => {
+          console.log(error);
         });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    }
+   
   };
 
   render() {
@@ -57,7 +63,7 @@ class CompanyTable extends Component {
                 ).forEach(([key, value]) => arr.push(value))}
                 {arr.map((value, index) => {
                   return (
-                    <td scope="row" key={index}>
+                    <td scope="row" id={index} key={index}>
                       {value}
                     </td>
                   );

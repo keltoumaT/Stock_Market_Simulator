@@ -7,13 +7,16 @@ class WalletTable extends Component {
     this.state = {
       walletArray: [],
       memberId: 1,
-      value:[]
+      value:[],
+      dealId:""
     };
+const dealId = "";
   }
 
   componentDidMount() {
     this.getData();
   }
+
 
   getData = () => {
     const URL = `http://localhost:8585/wallets/all/${this.state.memberId}`;
@@ -23,7 +26,8 @@ class WalletTable extends Component {
         this.setState({
           walletArray: response.data,
           memberId : this.state.memberId,
-          value: this.state.value
+          value: this.state.value,
+          dealId:""
         });
         console.log(this.state.walletArray);
       })
@@ -32,17 +36,40 @@ class WalletTable extends Component {
       });
   };
 
+  getLastDeal = (id) =>{
+    let URL = `http://localhost:8585/deals/first/${id}`;
+    axios
+    .get(URL)
+    .then(response =>{
+      this.setState({
+        walletArray: this.state.walletArray,
+        memberId : this.state.memberId,
+        value: this.state.value,
+        dealId:response.data.symbol
+      });
+    })
+    .catch(error =>{
+        console.log(error);
+    })
+
+}
+ 
+  //Method to get last deal and retrieve company symbol
+  //If not found do something
+  //Then pass it to the link to create a new page for the trading board
 
   render() {
     if(this.state.walletArray.length !== 0){
       return (
         <div>
-          <h1>WALLET TABLE</h1>
+          <br/>
+          <h1>Wallet List</h1>
+          <br/>
             {this.state.walletArray.map((el, index)=>{
              return <ul key={index}>
                  <Link key={index} to={`trading-board/${el.id}`}>
                       <li>Wallet : {el.name}</li>
-                  </Link>
+                </Link>
                     </ul>
             })}
         </div>

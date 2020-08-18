@@ -3,8 +3,11 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 25px;
-
+    margin-bottom: 2px;
+    background-color: #fff;
+	-webkit-box-shadow: 0 8px 6px -6px #F2F3FC;
+	   -moz-box-shadow: 0 8px 6px -6px #F2F3FC;
+	        box-shadow: 0 8px 6px -6px #F2F3FC;
     .options {
         width: 50%;
         height: 100%;
@@ -15,6 +18,16 @@
         .option {
             padding: 10px 15px;
             cursor: pointer;
+        color:#4A68BF;
+
         }
     }
+}
+
+
+
+.one-edge-shadow {
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
 }

@@ -1,11 +1,8 @@
 package com.masterpiece.stockmarketsimulator.dtos;
 
-import com.masterpiece.stockmarketsimulator.entities.Deal;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 public class WalletDto {
 
@@ -16,8 +13,7 @@ public class WalletDto {
     @Size(max = 255)
     private String memo;
 
-    @NotNull
-    private Long initialCapital;
+    private Double capital;
 
     @NotNull
     private Long memberId;
@@ -39,12 +35,12 @@ public class WalletDto {
         this.memo = memo;
     }
 
-    public Long getInitialCapital() {
-        return initialCapital;
+    public Double getCapital() {
+        return capital;
     }
 
-    public void setInitialCapital(Long initialCapital) {
-        this.initialCapital = initialCapital;
+    public void setCapital(Double capital) {
+        this.capital = capital;
     }
 
     public Long getMemberId() {

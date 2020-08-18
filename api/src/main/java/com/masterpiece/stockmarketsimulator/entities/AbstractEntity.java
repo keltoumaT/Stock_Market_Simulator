@@ -1,6 +1,8 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

@@ -19,7 +19,7 @@ public class MemberDto {
     @Size(max = 200)
     private String email;
 
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid password address")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^?&*_=+-]).{8,50}$", message = "Invalid password")
     @Size(min = 8, max = 50)
     private String password;
 

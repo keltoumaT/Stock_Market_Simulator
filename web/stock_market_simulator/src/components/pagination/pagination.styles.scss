@@ -1,0 +1,50 @@
+$primary: #FF4081;
+body {
+ // display: grid;
+  //place-content: center;
+  //height: 100vh;
+  //background: #ECEFF1;
+}
+.toggle {
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 700px) { 
+		flex-direction: column;
+	}
+  input {
+    display: none;
+    @for $i from 0 through 10 {
+     &#toggle-#{$i}:checked ~ .label-#{$i} {
+		width: 120px;
+       @media screen and (max-width: 700px) { 
+	     height: 120px;
+      width: auto;
+	    }
+		}
+		}
+  }
+  label {
+    width: 80px;
+    height: 25px;
+    margin: 0 20px;
+    border-radius: 999px;
+    background: $primary;
+    cursor: pointer;
+    box-shadow: 
+      0 5px 5px -5px rgba($primary, 0.15),
+      0 10px 10px -5px rgba($primary, 0.15),
+      0 15px 15px -5px rgba($primary, 0.15),
+      0 20px 20px -5px rgba($primary, 0.15);
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 10px;
+    @media screen and (max-width: 700px) { 
+      width: 25px;
+      height: 60px;
+      margin: 20px 0;
+    }
+  }
+}

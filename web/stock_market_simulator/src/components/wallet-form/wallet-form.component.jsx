@@ -7,18 +7,18 @@ class WalletForm extends Component {
     super();
     this.state = {
       name: '',
-      initialCapital: '',
+      capital: '',
       memo: '',
       memberId: 1
     };
   }
   handleSubmit = async event => {
     event.preventDefault();
-    const { name, initialCapital, memo } = this.state;
+    const { name, capital, memo } = this.state;
 
     this.setState({
       name: name,
-      initialCapital: initialCapital,
+      capital: capital,
       memo: memo
     });
     console.log(this.state);
@@ -26,7 +26,7 @@ class WalletForm extends Component {
     axios
       .post(URL, {
         name: this.state.name,
-        initialCapital: this.state.initialCapital,
+        capital: this.state.capital,
         memo: this.state.memo,
         memberId: this.state.memberId
       })
@@ -44,12 +44,12 @@ class WalletForm extends Component {
   };
 
   render() {
-    const { name, initialCapital, memo } = this.state;
+    const { name, capital, memo } = this.state;
 
     return (
       <div>
         <br></br>
-        <h1>Wallets</h1>
+        <h1>Create a wallet</h1>
         <form className="wallet" onSubmit={this.handleSubmit}>
           <FormInput
             type="text"
@@ -63,10 +63,10 @@ class WalletForm extends Component {
           />
           <FormInput
             type="number"
-            name="initialCapital"
-            value={initialCapital}
+            name="capital"
+            value={capital}
             onChange={this.handleChange}
-            label="Initial Capital"
+            label="Capital"
             required
           />
           <FormInput
