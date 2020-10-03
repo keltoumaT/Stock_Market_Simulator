@@ -38,7 +38,7 @@ class SearchBar extends Component {
     let searchQuery = event.target.value.toLowerCase();
     let displayedCompanies = this.state.companies.filter(company => {
     let searchValue = company.name.toLowerCase();
-      if(event.target.value !=""){
+      if(event.target.value !== ""){
       return searchValue.indexOf(searchQuery) !== -1;
 
       }

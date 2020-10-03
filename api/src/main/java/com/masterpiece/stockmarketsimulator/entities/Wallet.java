@@ -6,6 +6,7 @@ import org.hibernate.annotations.Proxy;
 import javax.persistence.*;
 
 @Entity
+@Proxy(lazy = false)
 public class Wallet extends AbstractEntity{
 
     @Column(length = 100)

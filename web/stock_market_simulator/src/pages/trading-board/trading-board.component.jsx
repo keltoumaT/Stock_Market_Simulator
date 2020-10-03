@@ -18,7 +18,7 @@ class TradingBoard extends React.Component{
                 walletId: walletId,
                 data:{},
                 currentSymbol: "",
-                range:"1m",
+                range:"5d",
                 walletObj : {},
             }
     }
@@ -130,10 +130,14 @@ class TradingBoard extends React.Component{
         })
     }
 
+    randomNum = () => {
+        return Math.floor(Math.random()* 1000)
+    }
+
     handleBuy = event => {
         //if else
         event.preventDefault();
-        let quantity = document.getElementsByName("quantity")[1].valueAsNumber;
+        let quantity = document.getElementById("buy_quantity").value;
         console.log(quantity);
         axios
           .post('http://localhost:8585/deals', {
@@ -145,6 +149,7 @@ class TradingBoard extends React.Component{
           })
           .then(response => {
             console.log(response);
+            this.randomNum();
             console.log(response.status)
           })
           .catch(error => {
@@ -152,7 +157,7 @@ class TradingBoard extends React.Component{
           });
       };
     render(){
-        if(this.state.currentSymbol != ""){
+        if(this.state.currentSymbol !== ""){
             return(
                 <div id="trading_board_body">
                     <div id="d">
@@ -172,6 +177,8 @@ class TradingBoard extends React.Component{
                     <br/>
                     <DealList walletId={this.state.walletId} capital={this.state.data.capital} walletObj={this.state.walletObj}/>
                     <br/>
+                    <hr/>
+                    <br/>
                     <CompanyTable getCompanyObj={this.getCompanyObj.bind(this)} key={this.state.currentSymbol} symbol={this.state.currentSymbol}/>
                     <hr/>
                     <table id="x" key={this.state.range} style={{borderRadius: '5px!important'}}>
@@ -186,7 +193,7 @@ class TradingBoard extends React.Component{
                                 <Chart key={this.state.currentSymbol} symbol={this.state.currentSymbol} range={this.state.range}/>
                             </td>
                             <td>
-                                <input type="number" name="quantity" id="" placeholder="QUANTITY"/>
+                                <input type="number" name="quantity" id="buy_quantity" placeholder="QUANTITY"/>
                                 <button onClick={this.handleBuy}>BUY</button>
                             </td>
                         </tr>

@@ -1,47 +1,28 @@
-package com.masterpiece.stockmarketsimulator.entities;
+package com.masterpiece.stockmarketsimulator.dtos;
+
+import javax.validation.constraints.NotNull;
+
+public class DealUpdateDto {
 
 
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
-
-@Entity
-@Proxy(lazy = false)
-public class Deal extends AbstractEntity {
-
-    @Column(length = 255)
+    @NotNull
     private String companyName;
 
+    @NotNull
     private Long quantity;
 
+    @NotNull
     private Double unityPrice;
 
-    private LocalDateTime date;
-
-    @Column(length = 10)
+    @NotNull
     private String symbol;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Wallet wallet;
+    @NotNull
+    private Long id;
 
-    public Wallet getWallet() {
-        return wallet;
-    }
+    @NotNull
+    private Long walletId;
 
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
 
     public String getCompanyName() {
         return companyName;
@@ -73,5 +54,21 @@ public class Deal extends AbstractEntity {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(Long walletId) {
+        this.walletId = walletId;
     }
 }

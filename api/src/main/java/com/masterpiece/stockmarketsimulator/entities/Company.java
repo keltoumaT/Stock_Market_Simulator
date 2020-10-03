@@ -39,7 +39,7 @@ public class Company {
     @JsonProperty("open")
     private double open;
 
-    public String getCompanyName() {
+   /* public String getCompanyName() {
         return companyName;
     }
 
@@ -109,6 +109,6 @@ public class Company {
 
     public void setCalculationPrice(String calculationPrice) {
         this.calculationPrice = calculationPrice;
-    }
+    }*/
 
 }

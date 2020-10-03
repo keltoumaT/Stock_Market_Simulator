@@ -45,6 +45,7 @@ public class WalletServiceImpl implements WalletService {
         populateAndSave(dto, wallet);
     }
 
+
     private void populateAndSave(WalletDto dto, Wallet wallet){
         wallet.setCapital(dto.getCapital());
         wallet.setMemo(dto.getMemo());

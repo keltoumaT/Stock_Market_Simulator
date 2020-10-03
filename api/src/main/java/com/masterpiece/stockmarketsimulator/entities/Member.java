@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Proxy(lazy = false)
 public class Member extends AbstractEntity{
 
     @Column(length = 50, nullable = false)

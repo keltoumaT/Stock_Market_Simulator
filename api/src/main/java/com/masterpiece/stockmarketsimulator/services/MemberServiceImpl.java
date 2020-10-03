@@ -24,14 +24,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberViewDto getOne(Long id) {
+        return memberRepo.getById(id);
+    }
+
+
+    @Override
     public void create(MemberDto dto) {
     Member member = new Member();
     populateAndSave(dto, member);
-    }
-
-    @Override
-    public MemberViewDto getOne(Long id) {
-        return memberRepo.getById(id);
     }
 
 

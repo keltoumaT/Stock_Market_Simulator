@@ -16,23 +16,23 @@ public class WalletController {
 
     private final WalletService walletService;
 
-    public WalletController(WalletService walletService){
+    public WalletController(WalletService walletService) {
         this.walletService = walletService;
     }
 
     @PostMapping
-    protected void create(@Valid @RequestBody WalletDto dto){
+    protected void create(@Valid @RequestBody WalletDto dto) {
         walletService.create(dto);
     }
 
     @GetMapping("/{id}")
-    protected WalletViewDto getWallet (@PathVariable("id") Long id){
+    protected WalletViewDto getWallet(@PathVariable("id") Long id) {
         return walletService.getOne(id);
     }
 
     @GetMapping("all/{id}")
-    protected List<WalletViewDto> getAll(@PathVariable("id")Long id){
-      return  walletService.getAll(id);
+    protected List<WalletViewDto> getAll(@PathVariable("id") Long id) {
+        return walletService.getAll(id);
     }
 
     @PutMapping("/{id}")
@@ -40,6 +40,5 @@ public class WalletController {
                           @Valid @RequestBody WalletDto dto) {
         walletService.update(id, dto);
     }
-
 
 }

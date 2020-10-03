@@ -2,6 +2,7 @@ package com.masterpiece.stockmarketsimulator.controllers;
 
 
 import com.masterpiece.stockmarketsimulator.entities.Company;
+import com.masterpiece.stockmarketsimulator.entities.DealCurrentPrice;
 import com.masterpiece.stockmarketsimulator.entities.SharePriceEvolution;
 import com.masterpiece.stockmarketsimulator.services.CompanyService;
 import org.springframework.web.bind.annotation.*;
@@ -27,5 +28,10 @@ public class CompanyController {
     @GetMapping("/{name}/{range}")
     protected SharePriceEvolution[] getSharePriceEvolution(@PathVariable("name")String name, @PathVariable("range")String range){
         return companyService.getSharePriceEvolutionData(name, range);
+    }
+
+    @GetMapping("/currentPrice/{walletId}")
+    protected DealCurrentPrice getDealCurrentPrice(@PathVariable("walletId")Long walletId){
+        return companyService.getLatestPrice(walletId);
     }
 }

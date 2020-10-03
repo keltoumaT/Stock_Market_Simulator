@@ -17,5 +17,6 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
     DealViewDto getById(Long id);
     DealViewDto getFirstByWalletId(Long id);
     Page<DealViewDto> getAllByWalletId(Long walletId, Pageable pageable);
+    DealViewDto getWalletIdById(Long id);
 
 }

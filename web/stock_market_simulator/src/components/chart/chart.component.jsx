@@ -48,7 +48,7 @@ class CandleStickChart extends React.Component {
       console.log(this.props.symbol)
     }
   componentDidMount(){
-    let range = "1m";
+    let range = "5d";
     console.log(this.props.range);
     if(this.props.symbol !== undefined){
       axios.get(`http://localhost:8585/companies/${this.props.symbol}/${this.props.range}`)

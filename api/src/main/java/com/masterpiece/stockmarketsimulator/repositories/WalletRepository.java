@@ -13,4 +13,7 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
     WalletViewDto getById(Long id);
 
     List<WalletViewDto> getAllByMemberId(Long id);
+
+    Wallet getOne(Long id);
+
 }

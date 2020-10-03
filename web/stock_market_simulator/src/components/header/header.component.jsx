@@ -7,9 +7,9 @@ const Header = () => (
     <div className="options">
     <Link className="option" to="/">Home</Link>
       <Link className="option" to ="/wallets">Wallets</Link>
-      <Link className="option" to="/companies">
+      {/* <Link className="option" to="/companies">
         Companies
-      </Link>
+      </Link> */}
       <Link className="option" to="/signup">
         Sign Up/ Sign In
       </Link>

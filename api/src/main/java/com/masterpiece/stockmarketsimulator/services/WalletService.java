@@ -15,4 +15,5 @@ public interface WalletService {
 
     void update (Long id, WalletDto dto);
 
+
 }

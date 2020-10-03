@@ -10,7 +10,6 @@ class WalletTable extends Component {
       value:[],
       dealId:""
     };
-const dealId = "";
   }
 
   componentDidMount() {

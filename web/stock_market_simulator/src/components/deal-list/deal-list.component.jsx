@@ -12,7 +12,7 @@ class DealList extends Component{
         this.state={
             walletId:this.props.walletId,
             deal:[],
-            latestPrices:[],
+            latestPrices:{},
             isModalOpen:false,
             numberOfPages:"",
             page: 0,
@@ -26,13 +26,13 @@ class DealList extends Component{
     }
 
    getPages = (pageNum) =>{
-    const URL = `http://localhost:8585/deals/all/page/${this.state.walletId}?p=${pageNum}&s=2&by=walletId`;
+    const URL = `http://localhost:8585/deals/all/page/${this.state.walletId}?p=${pageNum}&s=4&by=walletId`;
     axios.get(URL)
     .then(response =>{
         this.setState({
             walletId : this.state.walletId,
             deal: response.data.content,
-            latestPrices : [],
+            latestPrices : {},
             isModalOpen :this.state.isModalOpen,
             numberOfPages : response.data.totalPages,
             currentCompanyName:this.state.currentCompanyName,
@@ -40,7 +40,10 @@ class DealList extends Component{
             quantity:this.state.quantity,
             totalCost:this.state.totalCost
         })
+        console.log(this.state.deal)
+        if(this.state.deal.length > 0){
         this.getLatestPrices();
+        }
     })
     .catch(error =>{
         console.log(error);
@@ -92,8 +95,12 @@ class DealList extends Component{
                     quantity:this.state.quantity, 
                     totalCost: this.state.totalCost
                 })
-            this.getLatestPrices();
-                console.log(this.state.deal);
+                
+                    
+                    this.getLatestPrices();
+                    console.log(this.state.deal);
+                
+           
         })
         .catch(error =>{
             console.log(error);
@@ -104,26 +111,45 @@ class DealList extends Component{
 
 
         getLatestPrices = () =>{
-            this.state.deal.map((el, index)=>{
-                axios.get(`http://localhost:8585/companies/${el.symbol}`)
-                .then(response =>{
-                    console.log(response.data.latestPrice)
-                    this.setState({
-                        walletId: this.state.walletId,
-                        deal : this.state.deal,
-                        latestPrices : [...this.state.latestPrices, response.data.latestPrice],
-                        isModalOpen : this.state.isModalOpen,
-                        numberOfPages: this.state.numberOfPages,
-                        currentCompanyName:this.state.currentCompanyName,
-                        dealId: this.state.dealId,
-                        quantity:this.state.quantity,
-                        totalCost:this.state.totalCost
-                    });
-                console.log("latestPrices ", this.state.latestPrices);
+            // this.state.deal.map((el, index)=>{
+            //     axios.get(`http://localhost:8585/companies/${el.symbol}`)
+            //     .then(response =>{
+            //         console.log(response.data.latestPrice)
+            //         this.setState({
+            //             walletId: this.state.walletId,
+            //             deal : this.state.deal,
+            //             latestPrices : [...this.state.latestPrices, response.data.latestPrice],
+            //             isModalOpen : this.state.isModalOpen,
+            //             numberOfPages: this.state.numberOfPages,
+            //             currentCompanyName:this.state.currentCompanyName,
+            //             dealId: this.state.dealId,
+            //             quantity:this.state.quantity,
+            //             totalCost:this.state.totalCost
+            //         });
+            //     console.log("latestPrices ", this.state.latestPrices);
 
-                });
-            }
-            )}
+            //     });
+            // }
+            // )
+            axios.get(`http://localhost:8585/companies/currentPrice/${this.state.walletId}`)
+            .then(response =>{
+                console.log("vzlkvnafalfnalvnavklnvlka");
+                console.log(response.data);
+                this.setState({
+                    walletId:this.state.walletId,
+                    deal:this.state.deal,
+                    latestPrices:response.data.details,
+                    isModalOpen: this.state.isModalOpen, 
+                    numberOfPages : this.state.numberOfPages,
+                    currentCompanyName: this.state.currentCompanyName,
+                    dealId:this.state.dealId,
+                    quantity:this.state.quantity, 
+                    totalCost: this.state.totalCost
+                })
+                console.log(this.state.latestPrices)
+            })
+            .catch(error => console.log(error))
+        }
     
      cutNumber = (number, digitsAfterDot) => {
         let str = `${number}`;
@@ -146,9 +172,14 @@ class DealList extends Component{
             })
     }
 
-    getPercentVariation = (unityPrice, index) =>{
+    getPercentVariation = (unityPrice, symbol) =>{
+        console.log(typeof symbol)
+        console.log(this.state.latestPrices)
+        let sym = symbol;
        let variation;
-        variation =  (this.state.latestPrices[index] - unityPrice)/ unityPrice * 100;
+       console.log(this.state.latestPrices[sym].quote.latestPrice);
+       let currentPrice = this.state.latestPrices[sym].quote.latestPrice ;
+        variation =  ( currentPrice - unityPrice)/ unityPrice * 100;
         return variation;
     }
 
@@ -160,7 +191,7 @@ class DealList extends Component{
         this.setState({ isModalOpen: false })
       }
     render(){
-        if(this.state.deal.length !== 0){
+        if(this.state.deal.length !== 0 && Object.keys(this.state.latestPrices).length !== 0){
             return(
         
                 <div> 
@@ -188,26 +219,34 @@ class DealList extends Component{
                         <td>{el.quantity}</td>
                         <td>$ {el.unityPrice}</td>
                         <td>$ {this.cutNumber(el.quantity * el.unityPrice, 4)}</td>
-                        <td>$ {this.state.latestPrices[index]}</td>
+                        <td>$ {this.state.latestPrices[el.symbol].quote.latestPrice}</td>
                         {/* Extract this in another method and store in an array then display using the index to avoid lagging */}
-                        <td style={{color: this.cutNumber(this.getPercentVariation(el.unityPrice, index),2) > 0 ? "green" : "red"} }>
-                            {this.cutNumber(this.getPercentVariation(el.unityPrice, index),2)}%
+                        <td style={{color: this.cutNumber(this.getPercentVariation(el.unityPrice, el.symbol),2) > 0 ? "green" : "red"} }>
+                            {this.cutNumber(this.getPercentVariation(el.unityPrice, el.symbol),2)}%
                         </td>
-                        <td style={{color: this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, index)/100)* el.quantity,4) == "NaN" ? "white" : "black"}}>$ {this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, index)/100)* el.quantity,4)}</td>
-                        <td><button type="submit" name={el.companyName} value={el.id} onClick={()=>{this.getCurrentSelectedCompany(el.companyName, el.symbol, el.quantity, el.id,this.cutNumber(el.quantity * el.unityPrice, 4), this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, index)/100)* el.quantity,4), el.unityPrice); this.openModal();}}>Sell</button></td>
+                        <td style={{color: this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4) == "NaN" ? "white" : "black"}}>$ {this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4)}</td>
+                        <td><button type="submit" name={el.companyName} value={el.id} onClick={()=>{this.getCurrentSelectedCompany(el.companyName, el.symbol, el.quantity, el.id,this.cutNumber(el.quantity * el.unityPrice, 4), this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4), el.unityPrice); this.openModal();}}>Sell</button></td>
                     </tr>
                    
                 ))}
+
+                    <tr>
+                        <td colSpan="10">
+               
+                   <Modal isOpen={this.state.isModalOpen} onClose={this.closeModal} currentUnityPrices={this.state.latestPrices}  walletObj={this.props.walletObj} symbol={this.state.symbol} unityPrice={this.state.unityPrice} companyName={this.state.currentCompanyName} dealId={this.state.dealId} currentQuantity={this.state.quantity}/>
+                   </td>
+                                   
+                    </tr>
         </tbody>
     </table>
     <div id="pagination_holder">
         <Pagination numberOfPages={this.state.numberOfPages} nextPage={this.getNextPage.bind(this)}/>
     </div>
-    <Modal isOpen={this.state.isModalOpen} onClose={this.closeModal}  walletObj={this.props.walletObj} totalCost={this.state.totalCost} symbol={this.state.symbol} gainsOrLosses={this.state.gainsOrLosses} unityPrice={this.state.unityPrice} companyName={this.state.currentCompanyName} dealId={this.state.dealId} currentQuantity={this.state.quantity} capital={this.props.capital}/>
+    {/* <Modal isOpen={this.state.isModalOpen} onClose={this.closeModal}  walletObj={this.props.walletObj} totalCost={this.state.totalCost} symbol={this.state.symbol} gainsOrLosses={this.state.gainsOrLosses} unityPrice={this.state.unityPrice} companyName={this.state.currentCompanyName} dealId={this.state.dealId} currentQuantity={this.state.quantity} capital={this.props.capital}/> */}
     </div>
             )
         }
-        return ( <p>You don't have any deal yet</p>);
+        return ( <p></p>);
 
     }
 

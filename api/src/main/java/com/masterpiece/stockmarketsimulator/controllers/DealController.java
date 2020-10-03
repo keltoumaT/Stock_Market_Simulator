@@ -1,9 +1,10 @@
 package com.masterpiece.stockmarketsimulator.controllers;
 
 
-import com.masterpiece.stockmarketsimulator.dtos.DealDto;
-import com.masterpiece.stockmarketsimulator.dtos.DealViewDto;
+import com.masterpiece.stockmarketsimulator.dtos.*;
+import com.masterpiece.stockmarketsimulator.entities.Deal;
 import com.masterpiece.stockmarketsimulator.services.DealService;
+import org.hibernate.annotations.Proxy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/deals")
+@Proxy(lazy = false)
 public class DealController {
 
 
@@ -54,13 +56,25 @@ public class DealController {
         return dealService.getAllByWalletId(walletId, pageable);
     }
 
+//    @PutMapping("test/{id}")
+//    protected void delete(@PathVariable("id")Long id, @RequestBody DealUpdateDto dealUpdateDto){
+//        dealService.delete(id, dealUpdateDto);
+//    }
+
+    @PutMapping("{id}")
+    protected void update(@PathVariable("id")Long id, @Valid @RequestBody DealUpdateDto dealUpdateDto){
+       dealService.update(id, dealUpdateDto);
+    }
+
+//    @PutMapping("{id}")
+//    protected void update(@PathVariable("id")Long id, @Valid @RequestBody DealDto dealDto){
+//        dealService.update(id, dealDto);
+//    }
+
     @DeleteMapping("{id}")
     protected void delete(@PathVariable("id")Long id){
         dealService.delete(id);
     }
 
-    @PutMapping("{id}")
-    protected void update(@PathVariable("id")Long id, @Valid @RequestBody DealDto dealDto){
-       dealService.update(id, dealDto);
-    }
+
 }

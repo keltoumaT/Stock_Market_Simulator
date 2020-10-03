@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 
 
 @Entity
+@Proxy(lazy = false)
 public class Role extends AbstractEntity {
 
 

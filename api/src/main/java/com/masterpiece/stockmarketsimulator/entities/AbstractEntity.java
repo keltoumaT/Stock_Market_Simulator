@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
+@Proxy(lazy = false)
 public class AbstractEntity {
 
     @Id
