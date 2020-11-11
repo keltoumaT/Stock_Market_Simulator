@@ -22,14 +22,16 @@ class WalletForm extends Component {
       memo: memo
     });
     console.log(this.state);
-    const URL = 'http://localhost:8585/wallets';
+    let token = localStorage.getItem("access_token")
+    const config = { headers:{'Authorization': `Bearer ${token}`}};
+    const URL = 'http://localhost:8585/api/private/wallets';
     axios
       .post(URL, {
         name: this.state.name,
         capital: this.state.capital,
         memo: this.state.memo,
         memberId: this.state.memberId
-      })
+      }, config)
       .then(response => {
         console.log(response);
       })

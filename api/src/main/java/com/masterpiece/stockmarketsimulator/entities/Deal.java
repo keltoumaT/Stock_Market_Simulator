@@ -27,6 +27,8 @@ public class Deal extends AbstractEntity {
     @JoinColumn(nullable = false)
     private Wallet wallet;
 
+    private Long userId;
+
     public Wallet getWallet() {
         return wallet;
     }
@@ -73,5 +75,13 @@ public class Deal extends AbstractEntity {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

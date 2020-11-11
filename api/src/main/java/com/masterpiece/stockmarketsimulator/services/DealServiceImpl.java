@@ -20,10 +20,12 @@ public class DealServiceImpl implements DealService {
 
     private final DealRepository dealRepository;
     private final WalletRepository walletRepository;
+    private final CustomUserDetailsServiceImpl customUserDetailsService;
 
-    public DealServiceImpl(DealRepository dealRepository, WalletRepository walletRepository) {
+    public DealServiceImpl(DealRepository dealRepository, WalletRepository walletRepository, CustomUserDetailsServiceImpl customUserDetailsService) {
         this.dealRepository = dealRepository;
         this.walletRepository = walletRepository;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
@@ -60,9 +62,11 @@ public class DealServiceImpl implements DealService {
         deal.setQuantity(dto.getQuantity());
         deal.setUnityPrice(dto.getUnityPrice());
         deal.setSymbol(dto.getSymbol());
+        deal.setUserId(customUserDetailsService.getCurrentUserId());
         Wallet wallet = walletRepository.getOne(dto.getWalletId());
         deal.setWallet(wallet);
-        wallet.setCapital((wallet.getCapital() - dto.getQuantity() * dto.getUnityPrice()));
+        double newCapitalAmount = wallet.getCapital() - dto.getQuantity() * dto.getUnityPrice();
+        wallet.setCapital(round(newCapitalAmount,4));
         dealRepository.save(deal);
         walletRepository.save(wallet);
     }
@@ -76,15 +80,16 @@ public class DealServiceImpl implements DealService {
     public void update(Long id, DealUpdateDto dealUpdateDto) {
         updateWalletCapital(dealUpdateDto);
         Deal deal = dealRepository.getOne(id);
-        if(dealUpdateDto.getQuantity().equals(deal.getQuantity())){
+        if (dealUpdateDto.getQuantity().equals(deal.getQuantity())||dealUpdateDto.getQuantity()==0) {
             dealRepository.deleteById(id);
-        }else{
+        } else {
             DealDto dealDto = new DealDto();
             dealDto.setCompanyName(dealUpdateDto.getCompanyName());
             dealDto.setQuantity(dealUpdateDto.getQuantity());
             dealDto.setSymbol(dealUpdateDto.getSymbol());
             dealDto.setUnityPrice(dealUpdateDto.getUnityPrice());
             dealDto.setWalletId(dealUpdateDto.getWalletId());
+            dealDto.setUserId(customUserDetailsService.getCurrentUserId());
             populateAndSave(dealDto, deal);
         }
     }
@@ -100,9 +105,9 @@ public class DealServiceImpl implements DealService {
         double formerValue = deal.getUnityPrice() * dealUpdateDto.getQuantity();
         double currentValue = dealUpdateDto.getUnityPrice() * dealUpdateDto.getQuantity();
 
-            double newCapital = wallet.getCapital() +
-                    (formerValue) + (currentValue-formerValue);
-            wallet.setCapital(round(newCapital, 4));
+        double newCapital = wallet.getCapital() +
+                (formerValue) + (currentValue - formerValue);
+        wallet.setCapital(round(newCapital, 4));
 
         walletRepository.save(wallet);
     }
@@ -112,5 +117,9 @@ public class DealServiceImpl implements DealService {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    public Long getUserIdFromDealList(List<DealViewDto> dealViewDtos){
+      return dealViewDtos.get(0).getUserId();
     }
 }

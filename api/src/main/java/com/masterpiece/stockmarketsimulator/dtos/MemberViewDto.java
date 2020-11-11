@@ -7,4 +7,5 @@ public interface MemberViewDto {
     String getFirstName();
     String getEmail();
     String getPassword();
+    String getUsername();
 }

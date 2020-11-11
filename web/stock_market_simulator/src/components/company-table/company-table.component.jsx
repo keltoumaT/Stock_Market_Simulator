@@ -16,10 +16,12 @@ class CompanyTable extends Component {
    this.props.getCompanyObj(this.state.companyData);
   }
   getCompanyData = () => {
+    let token = localStorage.getItem("access_token")
+    const config = { headers:{'Authorization': `Bearer ${token}`}};
     if(this.state.symbol !== undefined){
-      let URL = `http://localhost:8585/companies/${this.state.symbol}`;
+      let URL = `http://localhost:8585/api/private/companies/${this.state.symbol}`;
       axios
-        .get(URL)
+        .get(URL, config)
         .then(response => {
           console.log(response.data);
           this.setState({
@@ -39,7 +41,7 @@ class CompanyTable extends Component {
     const arr = [];
     return (
       <div>
-        <h1>Company Info : {this.state.symbol}</h1>
+        <h1 id="company_header">Company Info : {this.state.symbol}</h1>
         <div>
           <table>
             <thead>

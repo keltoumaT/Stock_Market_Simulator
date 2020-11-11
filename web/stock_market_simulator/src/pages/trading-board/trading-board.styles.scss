@@ -1,5 +1,5 @@
 #sell_buy{
-    width: 20%;
+    width: 10%;
     color:red;
 }
 
@@ -31,7 +31,7 @@ td{
 #trading_board_body{
     //background-color: #F3F6FE;
     //background-color: #F2F3FC;
-    background-color: #F4FAFF;
+    background-color: #fbfbff;
     padding-bottom: 20%;
 }
 
@@ -50,3 +50,33 @@ td{
 .button2 {
     border-radius: 4px;
 }
+
+.wallet_p{
+    font-size: 18px;
+}
+
+#trading_b_header{
+    font-size: 20px;
+}
+
+#buy_quantity{
+    padding: 15px;
+    width: 100%;
+    height: 35px;
+    border: 1px solid #9CAEF8;
+    margin-bottom: 15px;
+}
+
+#buy_button{
+    width: 90px;
+    height: 30px;
+    border: 1px solid #9caef8;
+    background-color: white;
+    color: black;
+    margin-right: 1%;
+  }
+  
+  #buy_button:hover{
+    border: 1px solid #FF4081;
+    
+  }

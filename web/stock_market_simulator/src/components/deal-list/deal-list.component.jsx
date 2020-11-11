@@ -26,8 +26,10 @@ class DealList extends Component{
     }
 
    getPages = (pageNum) =>{
-    const URL = `http://localhost:8585/deals/all/page/${this.state.walletId}?p=${pageNum}&s=4&by=walletId`;
-    axios.get(URL)
+    let token = localStorage.getItem("access_token")
+    const config = { headers:{'Authorization': `Bearer ${token}`}};
+    const URL = `http://localhost:8585/api/private/deals/all/page/${this.state.walletId}?p=${pageNum}&s=4&by=walletId`;
+    axios.get(URL, config)
     .then(response =>{
         this.setState({
             walletId : this.state.walletId,
@@ -131,7 +133,10 @@ class DealList extends Component{
             //     });
             // }
             // )
-            axios.get(`http://localhost:8585/companies/currentPrice/${this.state.walletId}`)
+            let token = localStorage.getItem("access_token")
+    
+            const config = { headers:{'Authorization': `Bearer ${token}`}};
+            axios.get(`http://localhost:8585/api/private/companies/currentPrice/${this.state.walletId}`, config)
             .then(response =>{
                 console.log("vzlkvnafalfnalvnavklnvlka");
                 console.log(response.data);
@@ -198,16 +203,16 @@ class DealList extends Component{
                 <table>
       <thead>
         <tr>
-          <th className="first_th" scope="col">Date</th>
-          <th scope="col">Symbol</th>
-          <th scope="col">Company</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Unity Price</th>
-          <th scope="col">Total Cost</th>
-          <th scope="col">Current Price</th>
+          <th className="first_th" >Date</th>
+          <th >Symbol</th>
+          <th >Company</th>
+          <th>Quantity</th>
+          <th >Unity Price</th>
+          <th >Total Cost</th>
+          <th >Current Price</th>
           <th>Variation %</th>
           <th>Gains or Losses</th>
-          <th className="last_th" scope="col"></th>
+          <th className="last_th" ></th>
         </tr>
       </thead>
         <tbody>
@@ -225,7 +230,7 @@ class DealList extends Component{
                             {this.cutNumber(this.getPercentVariation(el.unityPrice, el.symbol),2)}%
                         </td>
                         <td style={{color: this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4) == "NaN" ? "white" : "black"}}>$ {this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4)}</td>
-                        <td><button type="submit" name={el.companyName} value={el.id} onClick={()=>{this.getCurrentSelectedCompany(el.companyName, el.symbol, el.quantity, el.id,this.cutNumber(el.quantity * el.unityPrice, 4), this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4), el.unityPrice); this.openModal();}}>Sell</button></td>
+                        <td><button className="sell_button" type="submit" name={el.companyName} value={el.id} onClick={()=>{this.getCurrentSelectedCompany(el.companyName, el.symbol, el.quantity, el.id,this.cutNumber(el.quantity * el.unityPrice, 4), this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4), el.unityPrice); this.openModal();}}>Sell</button></td>
                     </tr>
                    
                 ))}

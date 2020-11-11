@@ -17,7 +17,7 @@ class TradingBoard extends React.Component{
             this.state = {
                 walletId: walletId,
                 data:{},
-                currentSymbol: "",
+                currentSymbol: "AAPL",
                 range:"5d",
                 walletObj : {},
             }
@@ -33,9 +33,11 @@ class TradingBoard extends React.Component{
     }
 
     getWalletInfo = () =>{
-        let URL_GET = `http://localhost:8585/wallets/${this.state.walletId}`
+        let token = localStorage.getItem("access_token")
+    const config = { headers:{'Authorization': `Bearer ${token}`}};
+        let URL_GET = `http://localhost:8585/api/private/wallets/${this.state.walletId}`
         axios
-        .get(URL_GET) 
+        .get(URL_GET, config) 
         .then(response =>{
             this.setState({
                 walletId: this.state.walletId,
@@ -53,9 +55,11 @@ class TradingBoard extends React.Component{
     }
 
     getLastDeal = () => {
-        let URL = `http://localhost:8585/deals/first/${this.state.walletId}`;
+        let token = localStorage.getItem("access_token")
+        const config = { headers:{'Authorization': `Bearer ${token}`}};
+        let URL = `http://localhost:8585/api/private/deals/first/${this.state.walletId}`;
         axios
-        .get(URL)
+        .get(URL, config)
         .then(response =>{
             this.setState({
                 walletId: this.state.walletId,
@@ -73,9 +77,11 @@ class TradingBoard extends React.Component{
 
     handleClick = async event =>{
         event.preventDefault();
-        let URL_PUT = `http://localhost:8585/wallets/${this.state.walletId}`
+        let token = localStorage.getItem("access_token")
+        const config = { headers:{'Authorization': `Bearer ${token}`}};
+        let URL_PUT = `http://localhost:8585/api/private/wallets/${this.state.walletId}`
         axios
-        .put(URL_PUT,this.state.data)
+        .put(URL_PUT,this.state.data, config)
         .then(response => {
             console.log(response);
           })
@@ -139,14 +145,16 @@ class TradingBoard extends React.Component{
         event.preventDefault();
         let quantity = document.getElementById("buy_quantity").value;
         console.log(quantity);
+        let token = localStorage.getItem("access_token")
+        const config = { headers:{'Authorization': `Bearer ${token}`}};
         axios
-          .post('http://localhost:8585/deals', {
+          .post('http://localhost:8585/api/private/deals', {
             companyName: document.getElementById("2").innerHTML,
             quantity: quantity,
             unityPrice: document.getElementById("3").innerHTML,
             symbol:document.getElementById("0").innerHTML,
             walletId: this.state.walletId
-          })
+          }, config)
           .then(response => {
             console.log(response);
             this.randomNum();
@@ -162,9 +170,9 @@ class TradingBoard extends React.Component{
                 <div id="trading_board_body">
                     <div id="d">
                         <div className="a">
-                    <h1>TRADING BOARD</h1>
-                        <p>Wallet: {this.state.data.name}</p>
-                        <p>Capital: ${this.state.data.capital}</p>
+                    <h1 id="trading_b_header">TRADING BOARD</h1>
+                        <p className="wallet_p">Wallet: {this.state.data.name}</p>
+                        <p className="wallet_p">Capital: ${this.state.data.capital}</p>
                        <form>
                            <input type="number" name="capital" placeholder="New capital amount" onChange={this.handleChange}/>
                            <button type="submit" onClick={this.handleClick}>ok</button>
@@ -194,7 +202,7 @@ class TradingBoard extends React.Component{
                             </td>
                             <td>
                                 <input type="number" name="quantity" id="buy_quantity" placeholder="QUANTITY"/>
-                                <button onClick={this.handleBuy}>BUY</button>
+                                <button id="buy_button" onClick={this.handleBuy}>BUY</button>
                             </td>
                         </tr>
                         </tbody>

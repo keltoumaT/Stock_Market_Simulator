@@ -10,6 +10,7 @@ class SignUp extends Component {
     this.state = {
       firstName: '',
       lastName: '',
+      username:'',
       email: '',
       password: ''
     };
@@ -17,20 +18,22 @@ class SignUp extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { firstName, lastName, email, password } = this.state;
+    const { firstName, lastName, username, email, password } = this.state;
 
     this.setState({
       firstName: firstName,
       lastName: lastName,
+      username: username,
       email: email,
       password: password
     });
     console.log(this.state);
-    const URL = 'http://localhost:8585/members';
+    const URL = 'http://localhost:8585/api/public/members';
     axios
       .post(URL, {
         lastName: this.state.lastName,
         firstName: this.state.firstName,
+        username: this.state.username,
         email: this.state.email,
         password: this.state.password
       })
@@ -47,7 +50,7 @@ class SignUp extends Component {
     this.setState({ [name]: value });
   };
   render() {
-    const { firstName, lastName, email, password } = this.state;
+    const { firstName, lastName, username, email, password } = this.state;
     return (
       <div className="sign-up">
         <h2 className="title">I do not have an account</h2>
@@ -69,6 +72,16 @@ class SignUp extends Component {
             value={lastName}
             onChange={this.handleChange}
             label="Last Name"
+            minLength="2"
+            maxLength="50"
+            required
+          />
+           <FormInput
+            type="text"
+            name="username"
+            value={username}
+            onChange={this.handleChange}
+            label="Username"
             minLength="2"
             maxLength="50"
             required

@@ -23,6 +23,8 @@ public class MemberDto {
     @Size(min = 8, max = 50)
     private String password;
 
+    private String username;
+
 
     public String getLastName() {
         return lastName;
@@ -54,5 +56,13 @@ public class MemberDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

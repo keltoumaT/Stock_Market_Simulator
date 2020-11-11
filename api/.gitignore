@@ -1,5 +1,4 @@
 HELP.md
-
 .mvn/wrapper/maven-wrapper.jar
 **/src/test/**
 /.classpath
@@ -61,3 +60,4 @@ build/
 /src/test/
 /.mvn/
 /.idea/
+api/.DS_Store

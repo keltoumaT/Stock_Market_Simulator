@@ -33,7 +33,7 @@ class CandleStickChart extends React.Component {
             candlestick: {
               colors: {
                 upward: '#39d3ec',
-                downward: '#9d7efe'
+                downward: '#9CAEF8'
               },
               wick: {
                 useFillColor: true
@@ -48,10 +48,12 @@ class CandleStickChart extends React.Component {
       console.log(this.props.symbol)
     }
   componentDidMount(){
+    let token = localStorage.getItem("access_token")
+    const config = { headers:{'Authorization': `Bearer ${token}`}};
     let range = "5d";
     console.log(this.props.range);
     if(this.props.symbol !== undefined){
-      axios.get(`http://localhost:8585/companies/${this.props.symbol}/${this.props.range}`)
+      axios.get(`http://localhost:8585/api/private/companies/${this.props.symbol}/${this.props.range}`, config)
       .then(response => {
   
           Object.entries(response.data).forEach((entry)=>{
@@ -105,7 +107,7 @@ class CandleStickChart extends React.Component {
                       candlestick: {
                         colors: {
                           upward: '#39d3ec',
-                          downward: '#9d7efe'
+                          downward: '#9CAEF8'
                         },
                         wick: {
                           useFillColor: true

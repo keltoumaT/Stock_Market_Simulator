@@ -16,7 +16,7 @@ public class WalletDto {
     private Double capital;
 
     @NotNull
-    private Long memberId;
+    private Long customUserId;
 
 
     public String getName() {
@@ -44,11 +44,11 @@ public class WalletDto {
     }
 
     public Long getMemberId() {
-        return memberId;
+        return customUserId;
     }
 
     public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+        this.customUserId = memberId;
     }
 
 

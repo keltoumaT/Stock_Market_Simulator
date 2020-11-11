@@ -4,6 +4,7 @@ package com.masterpiece.stockmarketsimulator.entities;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 
 
@@ -12,13 +13,19 @@ import javax.persistence.Entity;
 public class Role extends AbstractEntity {
 
 
-    @Column(length = 255, nullable = false, unique = true)
+    @Column(length = 256, nullable = false, unique = true)
     private String code;
 
 
-    @Column(length = 50, nullable = false)
+    @Convert(converter = BooleanConverter.class)
+    @Column(length = 1, nullable = false)
     private boolean defaultRole = false;
 
+    protected Role(){}
+
+    public Role(String code) {
+        this.code = code;
+    }
 
     public String getCode() {
         return code;

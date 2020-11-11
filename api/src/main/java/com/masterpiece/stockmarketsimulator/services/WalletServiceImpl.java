@@ -2,10 +2,10 @@ package com.masterpiece.stockmarketsimulator.services;
 
 import com.masterpiece.stockmarketsimulator.dtos.WalletDto;
 import com.masterpiece.stockmarketsimulator.dtos.WalletViewDto;
-import com.masterpiece.stockmarketsimulator.entities.Member;
+import com.masterpiece.stockmarketsimulator.entities.CustomUser;
 import com.masterpiece.stockmarketsimulator.entities.Wallet;
 import com.masterpiece.stockmarketsimulator.repositories.DealRepository;
-import com.masterpiece.stockmarketsimulator.repositories.MemberRepository;
+import com.masterpiece.stockmarketsimulator.repositories.CustomUserJpaRepository;
 import com.masterpiece.stockmarketsimulator.repositories.WalletRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,15 @@ import java.util.List;
 public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
-    private final MemberRepository memberRepository;
+    private final CustomUserJpaRepository customUserJpaRepository;
     private final DealRepository dealRepository;
+    private final CustomUserDetailsServiceImpl customUserDetailsService;
 
-    public WalletServiceImpl(WalletRepository walletRepository, MemberRepository memberRepository, DealRepository dealRepository){
+    public WalletServiceImpl(WalletRepository walletRepository, CustomUserJpaRepository customUserJpaRepository, DealRepository dealRepository, CustomUserDetailsServiceImpl customUserDetailsService){
         this.walletRepository = walletRepository;
-        this.memberRepository = memberRepository;
+        this.customUserJpaRepository = customUserJpaRepository;
         this.dealRepository = dealRepository;
+        this.customUserDetailsService = customUserDetailsService;
     }
     @Override
     public void create(WalletDto dto) {
@@ -36,7 +38,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public List<WalletViewDto> getAll(Long id) {
-        return walletRepository.getAllByMemberId(id);
+        return walletRepository.getAllByCustomUserId(id);
     }
 
     @Override
@@ -50,8 +52,8 @@ public class WalletServiceImpl implements WalletService {
         wallet.setCapital(dto.getCapital());
         wallet.setMemo(dto.getMemo());
         wallet.setName(dto.getName());
-        Member member = memberRepository.getOne(dto.getMemberId());
-        wallet.setMember(member);
+        CustomUser customUser = customUserJpaRepository.getOne(customUserDetailsService.getCurrentUserId());
+        wallet.setCustomUser(customUser);
         walletRepository.save(wallet);
     }
 

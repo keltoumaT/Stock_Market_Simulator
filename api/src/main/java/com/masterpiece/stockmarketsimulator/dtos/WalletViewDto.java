@@ -6,5 +6,5 @@ public interface WalletViewDto {
     String getMemo();
     Double getCapital();
     Long getId();
-    Long getMemberId();
+    Long getCustomUserId();
 }

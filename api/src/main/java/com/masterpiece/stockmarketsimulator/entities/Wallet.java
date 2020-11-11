@@ -1,6 +1,5 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
@@ -19,7 +18,7 @@ public class Wallet extends AbstractEntity{
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Member member;
+    private CustomUser customUser;
 
 
     public String getName() {
@@ -46,12 +45,12 @@ public class Wallet extends AbstractEntity{
         this.capital = initialCapital;
     }
 
-    public Member getMember() {
-        return member;
+    public CustomUser getCustomUser() {
+        return customUser;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setCustomUser(CustomUser customUser) {
+        this.customUser = customUser;
     }
 
 }

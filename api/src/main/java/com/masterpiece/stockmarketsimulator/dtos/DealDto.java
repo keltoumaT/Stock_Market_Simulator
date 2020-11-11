@@ -28,6 +28,8 @@ public class DealDto {
     @NotNull
     private String symbol;
 
+    private Long userId;
+
     public Long getWalletId() {
         return walletId;
     }
@@ -74,5 +76,13 @@ public class DealDto {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

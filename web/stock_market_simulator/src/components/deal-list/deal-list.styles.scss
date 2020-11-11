@@ -21,3 +21,15 @@ th{
     display: flex;
     justify-content:center;
 }
+
+.sell_button{
+    width: 90px;
+    height: 30px;
+    border: 1px solid #9caef8;
+    background-color: white;
+    color: black;
+}
+
+.sell_button:hover{
+    border: 1px solid #FF4081;
+}

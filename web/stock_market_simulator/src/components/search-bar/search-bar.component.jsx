@@ -63,7 +63,7 @@ class SearchBar extends Component {
           type="text"
           name="SearchBar"
           id="searchBar"
-          placeholder="Company Name"
+          placeholder="SEARCH FOR A COMPANY"
           onChange={this.onChange}
           className="search_input"
         />

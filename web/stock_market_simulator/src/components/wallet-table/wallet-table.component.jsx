@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {FiEdit } from "react-icons/fi";
 import { Link } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
+
 class WalletTable extends Component {
   constructor(props) {
     super(props);
+    let decoded_token = jwt_decode(localStorage.getItem("access_token"))
+    console.log(decoded_token.userId);
     this.state = {
       walletArray: [],
-      memberId: 1,
+      memberId: decoded_token.userId,
       value:[],
       dealId:""
     };
@@ -18,9 +23,12 @@ class WalletTable extends Component {
 
 
   getData = () => {
-    const URL = `http://localhost:8585/wallets/all/${this.state.memberId}`;
+    const URL = `http://localhost:8585/api/private/wallets/all/${this.state.memberId}`;
+    let token = localStorage.getItem("access_token")
+    console.log(token);
+    const config = { headers:{'Authorization': `Bearer ${token}`}};
     axios
-      .get(URL)
+      .get(URL, config)
       .then(response => {
         this.setState({
           walletArray: response.data,
@@ -36,7 +44,7 @@ class WalletTable extends Component {
   };
 
   getLastDeal = (id) =>{
-    let URL = `http://localhost:8585/deals/first/${id}`;
+    let URL = `http://localhost:8585/api/private/deals/first/${id}`;
     axios
     .get(URL)
     .then(response =>{
@@ -67,7 +75,7 @@ class WalletTable extends Component {
             {this.state.walletArray.map((el, index)=>{
              return <ul key={index}>
                  <Link key={index} to={`trading-board/${el.id}`}>
-                      <li>Wallet : {el.name}</li>
+                      <li>Wallet : {el.name} <FiEdit/></li>
                 </Link>
                     </ul>
             })}

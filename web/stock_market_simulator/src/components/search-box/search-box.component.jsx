@@ -57,7 +57,7 @@ class SearchBox extends Component {
           type="text"
           name="searchBox"
           id=""
-          placeholder="Company Name"
+          placeholder="SEARCH FOR A COMPANY"
           onChange={this.onChange}
           className="search_input"
         />
