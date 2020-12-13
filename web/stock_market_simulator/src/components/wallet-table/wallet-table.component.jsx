@@ -3,12 +3,12 @@ import axios from 'axios';
 import {FiEdit } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-
+import {FiRefreshCw} from "react-icons/fi"
 class WalletTable extends Component {
   constructor(props) {
     super(props);
     let decoded_token = jwt_decode(localStorage.getItem("access_token"))
-    console.log(decoded_token.userId);
+    console.log(decoded_token);
     this.state = {
       walletArray: [],
       memberId: decoded_token.userId,
@@ -60,7 +60,9 @@ class WalletTable extends Component {
     })
 
 }
- 
+ reloadComponent = () =>{
+   this.componentDidMount();
+ }
   //Method to get last deal and retrieve company symbol
   //If not found do something
   //Then pass it to the link to create a new page for the trading board
@@ -71,6 +73,7 @@ class WalletTable extends Component {
         <div>
           <br/>
           <h1>Wallet List</h1>
+          <FiRefreshCw onClick={()=>this.reloadComponent()}/>
           <br/>
             {this.state.walletArray.map((el, index)=>{
              return <ul key={index}>

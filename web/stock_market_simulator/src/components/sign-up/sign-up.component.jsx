@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import axios from 'axios';
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import './sign-up.styles.scss';
 
 class SignUp extends Component {
@@ -12,7 +14,9 @@ class SignUp extends Component {
       lastName: '',
       username:'',
       email: '',
-      password: ''
+      password: '',
+      open:false,
+      severity:"",
     };
   }
 
@@ -25,7 +29,9 @@ class SignUp extends Component {
       lastName: lastName,
       username: username,
       email: email,
-      password: password
+      password: password,
+      open:this.state.open,
+      severity:this.state.severity
     });
     console.log(this.state);
     const URL = 'http://localhost:8585/api/public/members';
@@ -39,11 +45,30 @@ class SignUp extends Component {
       })
       .then(response => {
         console.log(response);
+        this.setState({
+          open:true,
+          severity:"success"
+        })
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          open:true,
+          severity:"error"
+        })
       });
   };
+
+
+  handleClose = (event, reason) =>{
+      if(reason === 'clickaway'){
+        return;
+      }
+      this.setState({
+        open:false
+      })
+  }
+  
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -53,6 +78,20 @@ class SignUp extends Component {
     const { firstName, lastName, username, email, password } = this.state;
     return (
       <div className="sign-up">
+        <Snackbar open={this.state.open} autoHideDuration={6000} onClose={this.handleClose}>
+        <Alert onClose={this.handleClose} severity={this.state.severity}>
+
+
+
+          {
+            this.state.severity === "success" &&  "Your account has been created. You can now Sign In ! "
+          }
+          {
+            this.state.severity === "error" && "Oops we've encountered a problem. Please try again later !"
+          }
+      
+        </Alert>
+        </Snackbar>
         <h2 className="title">I do not have an account</h2>
         <span>Sign up</span>
         <form className="sign-up-form" onSubmit={this.handleSubmit}>

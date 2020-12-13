@@ -46,6 +46,7 @@ class SignIn extends React.Component{
                //Store access token in localStorage
                let access_token = response.data.access_token;
                localStorage.setItem("access_token", access_token);
+               window.location.replace("/wallets")
            })
            .catch((error)=>{
                console.log(error);

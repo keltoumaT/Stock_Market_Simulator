@@ -1,6 +1,8 @@
 import React from "react";
 import axios from 'axios';
 import {FiX } from "react-icons/fi";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import './modal.styles.scss';
 
 class Modal extends React.Component {
@@ -41,12 +43,29 @@ class Modal extends React.Component {
             "id":this.props.dealId,
             "walletId":this.props.walletObj.id
         }, config)
-        .then(response =>(
-            console.log(response)
-        ))
-        .catch(error => (
-            console.log(error)
-        ))
+        .then(response =>{
+            console.log(response);
+            this.setState({
+                open:true,
+                severity:"success"
+            })
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({
+                open:true,
+                severity:"error"
+            })
+        })
+    }
+
+    handleClose = (reason) =>{
+        if(reason === "clickaway"){
+            return;
+        }
+        this.setState({
+            open:false
+        })
     }
     
     render () {
@@ -60,6 +79,17 @@ class Modal extends React.Component {
             <button className="deal_sell_button" onClick={onClose}>Close</button>
             {this.state.dealHasBeenDeleted == true && <p>This deal has been deleted</p>}
             {this.state.dealHasBeenUpdated == true && <p>This deal has been updated</p>}
+            <Snackbar open={this.state.open} autoHideDuration={6000} onClose={this.handleClose}>
+                <Alert onClose={this.handleClose} severity={this.state.severity}>
+                {
+                    this.state.severity === "success" &&  "Successful transaction ! "
+                }
+                {
+                    this.state.severity === "error" && "Oops we've encountered a problem. Please try again later !"
+                }
+            
+                </Alert>
+            </Snackbar>
         </div>
         );
     

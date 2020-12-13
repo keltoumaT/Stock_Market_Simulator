@@ -63,20 +63,11 @@ public class DealController {
         return dealService.getAllByWalletId(walletId, pageable);
     }
 
-//    @PutMapping("test/{id}")
-//    protected void delete(@PathVariable("id")Long id, @RequestBody DealUpdateDto dealUpdateDto){
-//        dealService.delete(id, dealUpdateDto);
-//    }
-
     @PutMapping("{id}")
     protected void update(@PathVariable("id")Long id, @Valid @RequestBody DealUpdateDto dealUpdateDto){
        dealService.update(id, dealUpdateDto);
     }
 
-//    @PutMapping("{id}")
-//    protected void update(@PathVariable("id")Long id, @Valid @RequestBody DealDto dealDto){
-//        dealService.update(id, dealDto);
-//    }
 
     @DeleteMapping("{id}")
     protected void delete(@PathVariable("id")Long id){

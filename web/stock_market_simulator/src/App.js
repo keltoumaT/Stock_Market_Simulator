@@ -11,7 +11,7 @@ import './App.css';
 import CompanyDetails from './pages/company-details/company-details.component';
 import WalletPage from './pages/wallet/wallet.component';
 import TradingBoard from './pages/trading-board/trading-board.component';
-
+import ErrorPage from './pages/error-page/error-page.component';
 
 class App extends React.Component {
   constructor() {
@@ -47,6 +47,8 @@ class App extends React.Component {
       />
 
       <Route path ="/trading-board/:walletId" component={TradingBoard}/>
+
+      <Route path="/error" component={ErrorPage}/>
       </Switch> 
       </div>
     )

@@ -9,7 +9,7 @@ import org.hibernate.annotations.Proxy;
 import javax.persistence.Id;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Company {
+public class CompanyCurrentInfo {
 
     @Id
     @JsonProperty("symbol")

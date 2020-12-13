@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import axios from 'axios';
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 class WalletForm extends Component {
   constructor() {
     super();
@@ -9,7 +11,10 @@ class WalletForm extends Component {
       name: '',
       capital: '',
       memo: '',
-      memberId: 1
+      memberId: 1,
+      // decode token to get current user id
+      open:false,
+      severity:""
     };
   }
   handleSubmit = async event => {
@@ -34,9 +39,17 @@ class WalletForm extends Component {
       }, config)
       .then(response => {
         console.log(response);
+        this.setState({
+            open:true,
+            severity:"success"
+        })
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          open:true,
+          severity:"error"
+        })
       });
   };
 
@@ -45,6 +58,15 @@ class WalletForm extends Component {
     this.setState({ [name]: value });
   };
 
+  handleClose = (event, reason) =>{
+    if(reason === "clickaway"){
+      return;
+    }
+    this.setState({
+      open:false
+    })
+  }
+
   render() {
     const { name, capital, memo } = this.state;
 
@@ -52,6 +74,20 @@ class WalletForm extends Component {
       <div>
         <br></br>
         <h1>Create a wallet</h1>
+        <Snackbar open={this.state.open} autoHideDuration={6000} onClose={this.handleClose}>
+        <Alert onClose={this.handleClose} severity={this.state.severity}>
+
+
+
+          {
+            this.state.severity === "success" &&  "Success ! You can now refresh the wallet list ! "
+          }
+          {
+            this.state.severity === "error" && "Oops we've encountered a problem. Please try again later !"
+          }
+      
+        </Alert>
+        </Snackbar>
         <form className="wallet" onSubmit={this.handleSubmit}>
           <FormInput
             type="text"

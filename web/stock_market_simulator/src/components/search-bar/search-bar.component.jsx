@@ -55,7 +55,12 @@ class SearchBar extends Component {
       document.getElementById("searchBar").value = "";
       document.getElementById("companyList").style.display="none";
   }
-
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state,callback)=>{
+        return;
+    };
+}
   render() {
     return (
       <div className="holder">

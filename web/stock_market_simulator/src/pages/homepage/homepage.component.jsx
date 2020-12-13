@@ -1,5 +1,7 @@
 import React from 'react';
 import './homepage.styles.scss';
+import FirstImage from "../../assets/example-28.svg";
+import SecondImage from "../../assets/example-29.svg";
 
 const HomePage = () => (
   <div className="homepage">
@@ -12,14 +14,14 @@ const HomePage = () => (
         <p>Benefit from precise and continuous monitoring of the value and content of the portfolio.</p>
       </div>
       <div style={{width:"100%"}}>
-      <img style={{width:"100%"}} src={require("../../assets/example-28.svg")} alt=""/>
+      <img style={{width:"100%"}} src={FirstImage} alt=""/>
 
       </div>
     </div>
     <div className="main_divs">
     
       <div style={{width:"100%"}}>
-      <img style={{width:"75%"}} src={require("../../assets/example-29.svg")} alt=""/>
+      <img style={{width:"75%"}} src={SecondImage} alt=""/>
       </div>
       <div style={{width:"80%"}}>
         <h1>Create several portfolios to test different investement strategies</h1>

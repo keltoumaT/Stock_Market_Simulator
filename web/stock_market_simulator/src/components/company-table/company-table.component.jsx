@@ -15,6 +15,12 @@ class CompanyTable extends Component {
     console.log(this.props);
    this.props.getCompanyObj(this.state.companyData);
   }
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state,callback)=>{
+        return;
+    };
+}
   getCompanyData = () => {
     let token = localStorage.getItem("access_token")
     const config = { headers:{'Authorization': `Bearer ${token}`}};

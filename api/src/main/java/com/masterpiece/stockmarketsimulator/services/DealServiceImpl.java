@@ -65,7 +65,7 @@ public class DealServiceImpl implements DealService {
         deal.setUserId(customUserDetailsService.getCurrentUserId());
         Wallet wallet = walletRepository.getOne(dto.getWalletId());
         deal.setWallet(wallet);
-        double newCapitalAmount = wallet.getCapital() - dto.getQuantity() * dto.getUnityPrice();
+        double newCapitalAmount = wallet.getCapital() - (dto.getQuantity() * dto.getUnityPrice());
         wallet.setCapital(round(newCapitalAmount,4));
         dealRepository.save(deal);
         walletRepository.save(wallet);
@@ -83,14 +83,8 @@ public class DealServiceImpl implements DealService {
         if (dealUpdateDto.getQuantity().equals(deal.getQuantity())||dealUpdateDto.getQuantity()==0) {
             dealRepository.deleteById(id);
         } else {
-            DealDto dealDto = new DealDto();
-            dealDto.setCompanyName(dealUpdateDto.getCompanyName());
-            dealDto.setQuantity(dealUpdateDto.getQuantity());
-            dealDto.setSymbol(dealUpdateDto.getSymbol());
-            dealDto.setUnityPrice(dealUpdateDto.getUnityPrice());
-            dealDto.setWalletId(dealUpdateDto.getWalletId());
-            dealDto.setUserId(customUserDetailsService.getCurrentUserId());
-            populateAndSave(dealDto, deal);
+            deal.setQuantity(dealUpdateDto.getQuantity());
+            dealRepository.save(deal);
         }
     }
 
@@ -102,13 +96,9 @@ public class DealServiceImpl implements DealService {
     private void updateWalletCapital(DealUpdateDto dealUpdateDto) {
         Wallet wallet = walletRepository.getOne(dealUpdateDto.getWalletId());
         Deal deal = dealRepository.getOne(dealUpdateDto.getId());
-        double formerValue = deal.getUnityPrice() * dealUpdateDto.getQuantity();
-        double currentValue = dealUpdateDto.getUnityPrice() * dealUpdateDto.getQuantity();
-
-        double newCapital = wallet.getCapital() +
-                (formerValue) + (currentValue - formerValue);
+        double currentValue = dealUpdateDto.getUnityPrice() * (deal.getQuantity() - dealUpdateDto.getQuantity());
+        double newCapital = wallet.getCapital() +currentValue;
         wallet.setCapital(round(newCapital, 4));
-
         walletRepository.save(wallet);
     }
 

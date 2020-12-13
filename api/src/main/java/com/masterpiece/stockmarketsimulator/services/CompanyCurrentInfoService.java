@@ -1,7 +1,7 @@
 package com.masterpiece.stockmarketsimulator.services;
 
 import com.masterpiece.stockmarketsimulator.dtos.DealViewDto;
-import com.masterpiece.stockmarketsimulator.entities.Company;
+import com.masterpiece.stockmarketsimulator.entities.CompanyCurrentInfo;
 import com.masterpiece.stockmarketsimulator.entities.DealCurrentPrice;
 import com.masterpiece.stockmarketsimulator.entities.SharePriceEvolution;
 import com.masterpiece.stockmarketsimulator.repositories.DealRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Service
-public class CompanyService {
+public class CompanyCurrentInfoService {
 
     @Autowired
     RestTemplate restTemplate;
@@ -22,16 +22,16 @@ public class CompanyService {
     private String url_base = "https://sandbox.iexapis.com/stable/stock/";
     private String token = "token=Tpk_bb8d26bbc06543a884fc9098c59f2ae8";
 
-    public CompanyService(RestTemplate restTemplate, DealRepository dealRepository) {
+    public CompanyCurrentInfoService(RestTemplate restTemplate, DealRepository dealRepository) {
         this.restTemplate = restTemplate;
         this.dealRepository = dealRepository;
     }
 
 
-    public Company getCompanyData(String name) {
+    public CompanyCurrentInfo getCompanyData(String name) {
         String url = url_base + name + "/quote?" + token;
         System.out.println(restTemplate);
-        return restTemplate.getForObject(url, Company.class);
+        return restTemplate.getForObject(url, CompanyCurrentInfo.class);
     }
 
     public SharePriceEvolution[] getSharePriceEvolutionData(String symbol, String range) {

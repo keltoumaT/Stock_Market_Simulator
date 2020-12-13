@@ -4,6 +4,7 @@ import "./deal-list.styles.scss"
 import axios from 'axios';
 import Pagination from '../pagination/pagination.component';
 import Loading from '../loading/loading.component';
+import {FiRefreshCw} from "react-icons/fi"
 
 class DealList extends Component{
     
@@ -19,7 +20,7 @@ class DealList extends Component{
             currentCompanyName:"",
             dealId:"",
             quantity:"",
-            totalCost:""
+            totalCost:"",
         }
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -113,26 +114,6 @@ class DealList extends Component{
 
 
         getLatestPrices = () =>{
-            // this.state.deal.map((el, index)=>{
-            //     axios.get(`http://localhost:8585/companies/${el.symbol}`)
-            //     .then(response =>{
-            //         console.log(response.data.latestPrice)
-            //         this.setState({
-            //             walletId: this.state.walletId,
-            //             deal : this.state.deal,
-            //             latestPrices : [...this.state.latestPrices, response.data.latestPrice],
-            //             isModalOpen : this.state.isModalOpen,
-            //             numberOfPages: this.state.numberOfPages,
-            //             currentCompanyName:this.state.currentCompanyName,
-            //             dealId: this.state.dealId,
-            //             quantity:this.state.quantity,
-            //             totalCost:this.state.totalCost
-            //         });
-            //     console.log("latestPrices ", this.state.latestPrices);
-
-            //     });
-            // }
-            // )
             let token = localStorage.getItem("access_token")
     
             const config = { headers:{'Authorization': `Bearer ${token}`}};
@@ -195,6 +176,10 @@ class DealList extends Component{
       closeModal () {
         this.setState({ isModalOpen: false })
       }
+
+      reloadComponent = () =>{
+        this.componentWillMount();
+      }
     render(){
         if(this.state.deal.length !== 0 && Object.keys(this.state.latestPrices).length !== 0){
             return(
@@ -212,7 +197,7 @@ class DealList extends Component{
           <th >Current Price</th>
           <th>Variation %</th>
           <th>Gains or Losses</th>
-          <th className="last_th" ></th>
+          <th className="last_th" ><FiRefreshCw className="refresh" title="refresh" onClick={()=>this.reloadComponent()}/></th>
         </tr>
       </thead>
         <tbody>
@@ -229,7 +214,7 @@ class DealList extends Component{
                         <td style={{color: this.cutNumber(this.getPercentVariation(el.unityPrice, el.symbol),2) > 0 ? "green" : "red"} }>
                             {this.cutNumber(this.getPercentVariation(el.unityPrice, el.symbol),2)}%
                         </td>
-                        <td style={{color: this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4) == "NaN" ? "white" : "black"}}>$ {this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4)}</td>
+                        <td>$ {this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4)}</td>
                         <td><button className="sell_button" type="submit" name={el.companyName} value={el.id} onClick={()=>{this.getCurrentSelectedCompany(el.companyName, el.symbol, el.quantity, el.id,this.cutNumber(el.quantity * el.unityPrice, 4), this.cutNumber((el.unityPrice * this.getPercentVariation(el.unityPrice, el.symbol)/100)* el.quantity,4), el.unityPrice); this.openModal();}}>Sell</button></td>
                     </tr>
                    
@@ -251,7 +236,27 @@ class DealList extends Component{
     </div>
             )
         }
-        return ( <p></p>);
+        return (  <div> 
+            <p>You have no deal yet.</p>
+            <table>
+  <thead>
+    <tr>
+      <th className="first_th" >Date</th>
+      <th >Symbol</th>
+      <th >Company</th>
+      <th>Quantity</th>
+      <th >Unity Price</th>
+      <th >Total Cost</th>
+      <th >Current Price</th>
+      <th>Variation %</th>
+      <th>Gains or Losses</th>
+      <th className="last_th" ><FiRefreshCw onClick={()=>this.reloadComponent()}/></th>
+    </tr>
+  </thead>
+    <tbody>
+        </tbody>
+        </table>
+        </div>);
 
     }
 
