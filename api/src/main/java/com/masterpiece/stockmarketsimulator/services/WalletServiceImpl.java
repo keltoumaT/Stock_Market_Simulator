@@ -4,15 +4,16 @@ import com.masterpiece.stockmarketsimulator.dtos.WalletDto;
 import com.masterpiece.stockmarketsimulator.dtos.WalletViewDto;
 import com.masterpiece.stockmarketsimulator.entities.CustomUser;
 import com.masterpiece.stockmarketsimulator.entities.Wallet;
-import com.masterpiece.stockmarketsimulator.repositories.DealRepository;
 import com.masterpiece.stockmarketsimulator.repositories.CustomUserJpaRepository;
+import com.masterpiece.stockmarketsimulator.repositories.DealRepository;
 import com.masterpiece.stockmarketsimulator.repositories.WalletRepository;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WalletServiceImpl implements WalletService {
+public class WalletServiceImpl  extends  AbstractService implements WalletService {
 
     private final WalletRepository walletRepository;
     private final CustomUserJpaRepository customUserJpaRepository;
@@ -27,7 +28,8 @@ public class WalletServiceImpl implements WalletService {
     }
     @Override
     public void create(WalletDto dto) {
-    Wallet wallet = new Wallet();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        Wallet wallet = getModelMapper().map(dto, Wallet.class);
     populateAndSave(dto, wallet);
     }
 
@@ -49,9 +51,6 @@ public class WalletServiceImpl implements WalletService {
 
 
     private void populateAndSave(WalletDto dto, Wallet wallet){
-        wallet.setCapital(dto.getCapital());
-        wallet.setMemo(dto.getMemo());
-        wallet.setName(dto.getName());
         CustomUser customUser = customUserJpaRepository.getOne(customUserDetailsService.getCurrentUserId());
         wallet.setCustomUser(customUser);
         walletRepository.save(wallet);
