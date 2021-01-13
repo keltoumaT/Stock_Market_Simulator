@@ -1,10 +1,13 @@
 package com.masterpiece.stockmarketsimulator.services;
 
-import com.masterpiece.stockmarketsimulator.dtos.*;
+import com.masterpiece.stockmarketsimulator.dtos.DealDto;
+import com.masterpiece.stockmarketsimulator.dtos.DealUpdateDto;
+import com.masterpiece.stockmarketsimulator.dtos.DealViewDto;
 import com.masterpiece.stockmarketsimulator.entities.Deal;
 import com.masterpiece.stockmarketsimulator.entities.Wallet;
 import com.masterpiece.stockmarketsimulator.repositories.DealRepository;
 import com.masterpiece.stockmarketsimulator.repositories.WalletRepository;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.util.List;
 
 
 @Service
-public class DealServiceImpl implements DealService {
+public class DealServiceImpl extends AbstractService implements DealService {
 
     private final DealRepository dealRepository;
     private final WalletRepository walletRepository;
@@ -30,7 +33,8 @@ public class DealServiceImpl implements DealService {
 
     @Override
     public void create(DealDto dto) {
-        Deal deal = new Deal();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        Deal deal = getModelMapper().map(dto, Deal.class);
         populateAndSave(dto, deal);
     }
 
@@ -56,17 +60,14 @@ public class DealServiceImpl implements DealService {
     }
 
     private void populateAndSave(DealDto dto, Deal deal) {
-        deal.setCompanyName(dto.getCompanyName());
+
         LocalDateTime dateTime = LocalDateTime.now();
         deal.setDate(dateTime);
-        deal.setQuantity(dto.getQuantity());
-        deal.setUnityPrice(dto.getUnityPrice());
-        deal.setSymbol(dto.getSymbol());
         deal.setUserId(customUserDetailsService.getCurrentUserId());
         Wallet wallet = walletRepository.getOne(dto.getWalletId());
         deal.setWallet(wallet);
         double newCapitalAmount = wallet.getCapital() - (dto.getQuantity() * dto.getUnityPrice());
-        wallet.setCapital(round(newCapitalAmount,4));
+        wallet.setCapital(round(newCapitalAmount, 4));
         dealRepository.save(deal);
         walletRepository.save(wallet);
     }
@@ -80,7 +81,7 @@ public class DealServiceImpl implements DealService {
     public void update(Long id, DealUpdateDto dealUpdateDto) {
         updateWalletCapital(dealUpdateDto);
         Deal deal = dealRepository.getOne(id);
-        if (dealUpdateDto.getQuantity().equals(deal.getQuantity())||dealUpdateDto.getQuantity()==0) {
+        if (dealUpdateDto.getQuantity().equals(deal.getQuantity()) || dealUpdateDto.getQuantity() == 0) {
             dealRepository.deleteById(id);
         } else {
             deal.setQuantity(dealUpdateDto.getQuantity());
@@ -97,7 +98,7 @@ public class DealServiceImpl implements DealService {
         Wallet wallet = walletRepository.getOne(dealUpdateDto.getWalletId());
         Deal deal = dealRepository.getOne(dealUpdateDto.getId());
         double currentValue = dealUpdateDto.getUnityPrice() * (deal.getQuantity() - dealUpdateDto.getQuantity());
-        double newCapital = wallet.getCapital() +currentValue;
+        double newCapital = wallet.getCapital() + currentValue;
         wallet.setCapital(round(newCapital, 4));
         walletRepository.save(wallet);
     }
@@ -109,7 +110,7 @@ public class DealServiceImpl implements DealService {
         return bd.doubleValue();
     }
 
-    public Long getUserIdFromDealList(List<DealViewDto> dealViewDtos){
-      return dealViewDtos.get(0).getUserId();
+    public Long getUserIdFromDealList(List<DealViewDto> dealViewDtos) {
+        return dealViewDtos.get(0).getUserId();
     }
 }

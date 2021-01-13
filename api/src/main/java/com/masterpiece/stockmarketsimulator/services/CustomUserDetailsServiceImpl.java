@@ -6,7 +6,6 @@ import com.masterpiece.stockmarketsimulator.config.SecurityHelper;
 import com.masterpiece.stockmarketsimulator.dtos.CustomUserAuthDto;
 import com.masterpiece.stockmarketsimulator.dtos.CustomUserInfoDto;
 import com.masterpiece.stockmarketsimulator.entities.CustomUser;
-import com.masterpiece.stockmarketsimulator.entities.Role;
 import com.masterpiece.stockmarketsimulator.repositories.CustomUserJpaRepository;
 import com.masterpiece.stockmarketsimulator.repositories.RoleRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -47,15 +46,6 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService{
     @Override
     public void create(CustomUserAuthDto customUserAuthDto) {
         CustomUser customUser = new CustomUser();
-        populateAndSave(customUserAuthDto, customUser);
-    }
-
-    private void populateAndSave(CustomUserAuthDto customUserAuthDto, CustomUser customUser){
-        // endode password
-        // username
-        // firstname
-        // lastname
-        // the rest here outside the dto
     }
 
     public Long getCurrentUserId(){
