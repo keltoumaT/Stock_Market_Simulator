@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -64,12 +65,12 @@ public class DealServiceImpl extends AbstractService implements DealService {
         LocalDateTime dateTime = LocalDateTime.now();
         deal.setDate(dateTime);
         deal.setUserId(customUserDetailsService.getCurrentUserId());
-        Wallet wallet = walletRepository.getOne(dto.getWalletId());
-        deal.setWallet(wallet);
-        double newCapitalAmount = wallet.getCapital() - (dto.getQuantity() * dto.getUnityPrice());
-        wallet.setCapital(round(newCapitalAmount, 4));
+        Optional<Wallet> wallet = walletRepository.findById(dto.getWalletId());
+        deal.setWallet(wallet.get());
+        double newCapitalAmount = wallet.get().getCapital() - (dto.getQuantity() * dto.getUnityPrice());
+        wallet.get().setCapital(round(newCapitalAmount, 4));
         dealRepository.save(deal);
-        walletRepository.save(wallet);
+        walletRepository.save(wallet.get());
     }
 
     @Override
@@ -80,12 +81,12 @@ public class DealServiceImpl extends AbstractService implements DealService {
     @Override
     public void update(Long id, DealUpdateDto dealUpdateDto) {
         updateWalletCapital(dealUpdateDto);
-        Deal deal = dealRepository.getOne(id);
-        if (dealUpdateDto.getQuantity().equals(deal.getQuantity()) || dealUpdateDto.getQuantity() == 0) {
+        Optional<Deal> deal = dealRepository.findById(id);
+        if (dealUpdateDto.getQuantity().equals(deal.get().getQuantity()) || dealUpdateDto.getQuantity() == 0) {
             dealRepository.deleteById(id);
         } else {
-            deal.setQuantity(dealUpdateDto.getQuantity());
-            dealRepository.save(deal);
+            deal.get().setQuantity(dealUpdateDto.getQuantity());
+            dealRepository.save(deal.get());
         }
     }
 
@@ -95,12 +96,12 @@ public class DealServiceImpl extends AbstractService implements DealService {
     }
 
     private void updateWalletCapital(DealUpdateDto dealUpdateDto) {
-        Wallet wallet = walletRepository.getOne(dealUpdateDto.getWalletId());
-        Deal deal = dealRepository.getOne(dealUpdateDto.getId());
-        double currentValue = dealUpdateDto.getUnityPrice() * (deal.getQuantity() - dealUpdateDto.getQuantity());
-        double newCapital = wallet.getCapital() + currentValue;
-        wallet.setCapital(round(newCapital, 4));
-        walletRepository.save(wallet);
+        Optional<Wallet> wallet = walletRepository.findById(dealUpdateDto.getWalletId());
+        Optional<Deal> deal = dealRepository.findById(dealUpdateDto.getId());
+        double currentValue = dealUpdateDto.getUnityPrice() * (deal.get().getQuantity() - dealUpdateDto.getQuantity());
+        double newCapital = wallet.get().getCapital() + currentValue;
+        wallet.get().setCapital(round(newCapital, 4));
+        walletRepository.save(wallet.get());
     }
 
     private static double round(double value, int places) {

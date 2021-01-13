@@ -1,15 +1,12 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
 
-import org.hibernate.annotations.Proxy;
-
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 
 
 @Entity
-@Proxy(lazy = false)
 public class Role extends AbstractEntity {
 
 

@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -15,6 +17,7 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
 
     List<DealViewDto> getAllByWalletId(Long id);
     DealViewDto getById(Long id);
+    Optional<Deal>findById(Long id);
     DealViewDto getFirstByWalletId(Long id);
     Page<DealViewDto> getAllByWalletId(Long walletId, Pageable pageable);
     DealViewDto getWalletIdById(Long id);

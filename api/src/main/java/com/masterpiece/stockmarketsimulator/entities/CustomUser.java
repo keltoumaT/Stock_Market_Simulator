@@ -1,15 +1,9 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
-import org.hibernate.annotations.Proxy;
-import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Proxy(lazy = false)
 public class CustomUser {
 
     @Id

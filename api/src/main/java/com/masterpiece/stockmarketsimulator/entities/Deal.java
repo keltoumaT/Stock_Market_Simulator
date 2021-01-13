@@ -1,14 +1,14 @@
 package com.masterpiece.stockmarketsimulator.entities;
 
 
-import org.hibernate.annotations.Proxy;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 
 @Entity
-@Proxy(lazy = false)
 public class Deal extends AbstractEntity {
 
     @Column(length = 255)
