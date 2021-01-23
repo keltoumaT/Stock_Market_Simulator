@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from "react";
 
-const ErrorPage = () =>{
-
-    return(
-        <div>OOPS</div>
-    )
-}
+const ErrorPage = () => {
+  return <div>OOPS</div>;
+};
 
 export default ErrorPage;
